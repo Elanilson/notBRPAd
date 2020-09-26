@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NotPadBR</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="editar">Editar</string>
+    <string name="deletar">Deletar</string>
+    <string name="adicionar">adicionar</string>
+    <string name="compartilhar">Compartilhar</string>
+    <string name="criar">Criar</string>
+</resources>

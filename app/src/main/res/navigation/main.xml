@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.primeiroFragment"
+        android:label="fragment_primeiro"
+        tools:layout="@layout/fragment_primeiro" />
+    <fragment
+        android:id="@+id/menu2"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.SegundoFragment"
+        android:label="fragment_segundo"
+        tools:layout="@layout/fragment_segundo" />
+    <fragment
+        android:id="@+id/menu3"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.TerceiroFragment"
+        android:label="fragment_terceiro"
+        tools:layout="@layout/fragment_terceiro" />
+
+</navigation>
