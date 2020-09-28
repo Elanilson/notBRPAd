@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
@@ -41,10 +42,10 @@ public class VisualizacaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizacao);
-        inicializarComponentes();
-        atribuicao();
-
         recebendoDados();
+        inicializarComponentes();
+
+
 
         // atribuindo valor aos campos
         campoTexto.setText(nota.getTexto());
@@ -60,11 +61,11 @@ public class VisualizacaoActivity extends AppCompatActivity {
         //configulando CollapsingToolbarLayout
 
         final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapse);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.testefoto);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.fundo1);
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(@Nullable Palette palette) {
-                if (palette != null) {
+                if(palette !=null){
                     collapsingToolbarLayout.setContentScrimColor(palette.getDarkMutedColor(R.attr.colorPrimary));
                 }
             }
@@ -73,7 +74,8 @@ public class VisualizacaoActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(VisualizacaoActivity.this, EditorActivity.class));
+
+               enviarDados();
             }
         });
 
@@ -81,19 +83,27 @@ public class VisualizacaoActivity extends AppCompatActivity {
     }
     public void recebendoDados(){
         Bundle bundle = getIntent().getExtras();
+        Long id = bundle.getLong("id");
         String titulo = bundle.getString("titulo");
         String texto = bundle.getString("texto");
+        nota.setId(id);
         nota.setTitulo(titulo);
         nota.setTexto(texto);
+//        Toast.makeText(this, "id: "+nota.getId()+" titulo: "+nota.getTitulo()+" texto: "+nota.getTexto(), Toast.LENGTH_SHORT).show();
+    }
+    public void enviarDados(){
+        // enviar dados para serem editados/alterados
+        Intent intent = new Intent(VisualizacaoActivity.this,EditorActivity.class);
+        intent.putExtra("id",nota.getId());
+        intent.putExtra("titulo",nota.getTitulo());
+        intent.putExtra("texto",nota.getTexto());
+        intent.putExtra("editar",true);
+        startActivity(intent);
     }
 
 
 
-    public void atribuicao(){
-//        titulo = campoTitulo.getText().toString();
-     //   texto = campoTexto.getText().toString();
 
-    }
     public void inicializarComponentes(){
 //        campoTitulo = findViewById(R.id.editTitulo);
         campoTexto = findViewById(R.id.visuTexto);

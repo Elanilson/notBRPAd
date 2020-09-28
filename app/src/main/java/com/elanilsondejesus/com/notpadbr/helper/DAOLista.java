@@ -6,31 +6,32 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.elanilsondejesus.com.notpadbr.model.Lista;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAONota implements NotaDAO {
+public class DAOLista implements ListaDAO {
     private SQLiteDatabase escrever;
     private SQLiteDatabase ler;
 
-    public DAONota(Context context) {
+    public DAOLista(Context context) {
         Banco_DB db = new Banco_DB(context);
         escrever = db.getWritableDatabase();
         ler = db.getReadableDatabase();
     }
 
     @Override
-    public Boolean salvar(Nota nota) {
+    public Boolean salvar(Lista lista) {
         ContentValues cv = new ContentValues();
-        cv.put("titulo",nota.getTitulo());
-        cv.put("texto",nota.getTexto());
-        cv.put("cordefundo",nota.getCordeFundo());
-        cv.put("data",nota.getData());
+        cv.put("titulo",lista.getTitulo());
+        cv.put("texto",lista.getTexto());
+        cv.put("cordefundo",lista.getCordeFundo());
+        cv.put("data",lista.getData());
 
         try {
-            escrever.insert(Banco_DB.TABELA_NOTA,null,cv);
+            escrever.insert(Banco_DB.TABELA_LISTA,null,cv);
             Log.i("INFO", "Dados salva com sucesso!");
         }catch (Exception e){
             e.printStackTrace();
@@ -41,15 +42,15 @@ public class DAONota implements NotaDAO {
     }
 
     @Override
-    public Boolean atualizar(Nota nota) {
+    public Boolean atualizar(Lista lista) {
         ContentValues cv = new ContentValues();
-        cv.put("titulo",nota.getTitulo());
-        cv.put("texto",nota.getTexto());
-        cv.put("cordefundo",nota.getCordeFundo());
-        cv.put("data",nota.getData());
+        cv.put("titulo",lista.getTitulo());
+        cv.put("texto",lista.getTexto());
+        cv.put("cordefundo",lista.getCordeFundo());
+        cv.put("data",lista.getData());
         try {
-            String [] args ={nota.getId().toString()};
-            escrever.update(Banco_DB.TABELA_NOTA,cv,"id=?",args);
+            String [] args ={lista.getId().toString()};
+            escrever.update(Banco_DB.TABELA_LISTA,cv,"id=?",args);
             Log.i("INFO", "Dados Atualizado com sucesso!");
         }catch (Exception e){
             e.printStackTrace();
@@ -60,10 +61,10 @@ public class DAONota implements NotaDAO {
     }
 
     @Override
-    public Boolean deletar(Nota nota) {
+    public Boolean deletar(Lista lista) {
         try{
-            String [] args = {nota.getId().toString()};
-            escrever.delete(Banco_DB.TABELA_NOTA,"id=?",args);
+            String [] args = {lista.getId().toString()};
+            escrever.delete(Banco_DB.TABELA_LISTA,"id=?",args);
             Log.i("INFO", "Dados deletado com sucesso!");
 
         }catch (Exception e){
@@ -76,13 +77,13 @@ public class DAONota implements NotaDAO {
     }
 
     @Override
-    public List<Nota> listar() {
-        List<Nota> notas =new ArrayList<>();
-        String sql ="SELECT * FROM "+Banco_DB.TABELA_NOTA +"";
+    public List<Lista> listar() {
+        List<Lista> listas =new ArrayList<>();
+        String sql ="SELECT * FROM "+Banco_DB.TABELA_LISTA +"";
         Cursor c = ler.rawQuery(sql,null);
 
         while (c.moveToNext()) {
-            Nota nota = new Nota();
+           Lista lista = new Lista();
 
             Long id = c.getLong(c.getColumnIndex("id"));
             String titulo = c.getString(c.getColumnIndex("titulo"));
@@ -91,16 +92,16 @@ public class DAONota implements NotaDAO {
             String data = c.getString(c.getColumnIndex("data"));
 
 
-            nota.setId(id);
-            nota.setTitulo(titulo);
-            nota.setTexto(texto);
-            nota.setCordeFundo(cordefundo);
-            nota.setData(data);
+            lista.setId(id);
+            lista.setTitulo(titulo);
+            lista.setTexto(texto);
+            lista.setCordeFundo(cordefundo);
+            lista.setData(data);
 
-            notas.add(nota);
+            listas.add(lista);
             Log.i("Lista:", "AS notas estão sendo listadas" );
 
         }
-        return notas;
+        return listas;
     }
 }

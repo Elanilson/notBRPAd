@@ -3,21 +3,23 @@ package com.elanilsondejesus.com.notpadbr.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elanilsondejesus.com.notpadbr.R;
-import com.elanilsondejesus.com.notpadbr.model.Nota;
+import com.elanilsondejesus.com.notpadbr.model.ItemLista;
+import com.elanilsondejesus.com.notpadbr.model.Lista;
 
 import java.util.List;
 
-public class AdapterNota extends RecyclerView.Adapter<AdapterNota.MyViewHolder> {
-    List<Nota> notas;
+public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyViewHolder> {
+    List<ItemLista> itens;
 
-    public AdapterNota(List<Nota> notas) {
-        this.notas = notas;
+    public AdapterItemLista(List<ItemLista> itens) {
+        this.itens = itens;
     }
 
     @NonNull
@@ -25,28 +27,29 @@ public class AdapterNota extends RecyclerView.Adapter<AdapterNota.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
        View lista = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.layout_nota,parent,false);
+               .inflate(R.layout.layout_item_lista,parent,false);
         return new MyViewHolder(lista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Nota nota =notas.get(position);
-        holder.titulo.setText(nota.getTitulo());
-        holder.data.setText(nota.getData());
+        ItemLista itemLista = itens.get(position);
+        holder.titulo.setText(itemLista.getTitulo());
+        holder.marcado.setChecked(itemLista.getMarcado());
     }
 
     @Override
     public int getItemCount() {
-        return notas.size();
+        return itens.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView titulo, data;
+        private TextView titulo;
+        private CheckBox marcado;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            titulo = itemView.findViewById(R.id.textViewTitulo);
-            data = itemView.findViewById(R.id.textViewData);
+            titulo = itemView.findViewById(R.id.textViewTituloItemLista);
+            marcado = itemView.findViewById(R.id.checkBoxItem);
         }
     }
 }

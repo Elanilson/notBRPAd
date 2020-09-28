@@ -9,8 +9,8 @@ public class Banco_DB extends SQLiteOpenHelper {
     public static int VERSION= 1;
     public static String NOME_BD = "BANCO_NOTA_BD";
     public static String TABELA_NOTA = "NOTA";
-//    public static String TABELA_PROGRESSO = "PROGRESSO";
-//    public static String TABELA_HISTORICO = "HISTORICO";
+    public static String TABELA_LISTA = "LISTA";
+    public static String TABELA_ITENSLISTA= "ITEM";
 
     public Banco_DB( Context context) {
         super(context, NOME_BD,null, VERSION);
@@ -20,17 +20,17 @@ public class Banco_DB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String sql = " CREATE TABLE IF NOT EXISTS "+TABELA_NOTA
-                +"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), texto TEXT,cordefundo INT);";
+                +"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), texto TEXT,cordefundo INT, data varchar(15));";
         //pesorestante é o resultado da subtracao do peso autal com a meta
 
 
-//        String sql2 = "CREATE TABLE IF NOT EXISTS "+TABELA_PROGRESSO+"(id INTEGER PRIMARY KEY AUTOINCREMENT, dia int, mes int,ano int, peso float);";
+        String sql2 = "CREATE TABLE IF NOT EXISTS "+TABELA_LISTA+"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), texto TEXT,cordefundo INT, data varchar(15));";
 
-//        String sql3 = "CREATE TABLE IF NOT EXISTS "+TABELA_HISTORICO+"(id INTEGER PRIMARY KEY AUTOINCREMENT, data varchar(10), novopeso float, mudanca varchar(8));";
+        String sql3 = "CREATE TABLE IF NOT EXISTS "+TABELA_ITENSLISTA+"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), marcado INTEGER DEFAULT 0);";
         try{
             db.execSQL(sql);
-//            db.execSQL(sql2);
-//            db.execSQL(sql3);
+            db.execSQL(sql2);
+            db.execSQL(sql3);
             Log.i("INFO DB", "Sucesso ao criar TABELA" );
         }catch (Exception e){
             Log.i("INFO DB", "Erro ao criar TABELA" );

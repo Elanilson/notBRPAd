@@ -6,31 +6,30 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.elanilsondejesus.com.notpadbr.model.Nota;
+import com.elanilsondejesus.com.notpadbr.model.ItemLista;
+import com.elanilsondejesus.com.notpadbr.model.Lista;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAONota implements NotaDAO {
+public class DAOItemLista implements ItemListaDAO {
     private SQLiteDatabase escrever;
     private SQLiteDatabase ler;
 
-    public DAONota(Context context) {
+    public DAOItemLista(Context context) {
         Banco_DB db = new Banco_DB(context);
         escrever = db.getWritableDatabase();
         ler = db.getReadableDatabase();
     }
 
     @Override
-    public Boolean salvar(Nota nota) {
+    public Boolean salvar(ItemLista itemLista) {
         ContentValues cv = new ContentValues();
-        cv.put("titulo",nota.getTitulo());
-        cv.put("texto",nota.getTexto());
-        cv.put("cordefundo",nota.getCordeFundo());
-        cv.put("data",nota.getData());
+        cv.put("titulo",itemLista.getTitulo());
+        cv.put("marcado",itemLista.getMarcado());
 
         try {
-            escrever.insert(Banco_DB.TABELA_NOTA,null,cv);
+            escrever.insert(Banco_DB.TABELA_ITENSLISTA,null,cv);
             Log.i("INFO", "Dados salva com sucesso!");
         }catch (Exception e){
             e.printStackTrace();
@@ -41,15 +40,13 @@ public class DAONota implements NotaDAO {
     }
 
     @Override
-    public Boolean atualizar(Nota nota) {
+    public Boolean atualizar(ItemLista itemLista) {
         ContentValues cv = new ContentValues();
-        cv.put("titulo",nota.getTitulo());
-        cv.put("texto",nota.getTexto());
-        cv.put("cordefundo",nota.getCordeFundo());
-        cv.put("data",nota.getData());
+        cv.put("titulo",itemLista.getTitulo());
+        cv.put("marcado",itemLista.getMarcado());
         try {
-            String [] args ={nota.getId().toString()};
-            escrever.update(Banco_DB.TABELA_NOTA,cv,"id=?",args);
+            String [] args ={itemLista.getId().toString()};
+            escrever.update(Banco_DB.TABELA_ITENSLISTA,cv,"id=?",args);
             Log.i("INFO", "Dados Atualizado com sucesso!");
         }catch (Exception e){
             e.printStackTrace();
@@ -60,10 +57,10 @@ public class DAONota implements NotaDAO {
     }
 
     @Override
-    public Boolean deletar(Nota nota) {
+    public Boolean deletar(ItemLista itemLista) {
         try{
-            String [] args = {nota.getId().toString()};
-            escrever.delete(Banco_DB.TABELA_NOTA,"id=?",args);
+            String [] args = {itemLista.getId().toString()};
+            escrever.delete(Banco_DB.TABELA_ITENSLISTA,"id=?",args);
             Log.i("INFO", "Dados deletado com sucesso!");
 
         }catch (Exception e){
@@ -76,31 +73,28 @@ public class DAONota implements NotaDAO {
     }
 
     @Override
-    public List<Nota> listar() {
-        List<Nota> notas =new ArrayList<>();
-        String sql ="SELECT * FROM "+Banco_DB.TABELA_NOTA +"";
+    public List<ItemLista> listar() {
+        List<ItemLista> itens =new ArrayList<>();
+        String sql ="SELECT * FROM "+Banco_DB.TABELA_ITENSLISTA +"";
         Cursor c = ler.rawQuery(sql,null);
 
         while (c.moveToNext()) {
-            Nota nota = new Nota();
+           ItemLista itemLista = new ItemLista();
 
             Long id = c.getLong(c.getColumnIndex("id"));
             String titulo = c.getString(c.getColumnIndex("titulo"));
-            String texto = c.getString(c.getColumnIndex("texto"));
-            int cordefundo = c.getInt(c.getColumnIndex("cordefundo"));
-            String data = c.getString(c.getColumnIndex("data"));
+            // o boolean vai verificar se o retorno é 1 se for retorna true se nao false
+            Boolean marcado = (c.getInt(c.getColumnIndex("marcado"))==1);
 
 
-            nota.setId(id);
-            nota.setTitulo(titulo);
-            nota.setTexto(texto);
-            nota.setCordeFundo(cordefundo);
-            nota.setData(data);
+            itemLista.setId(id);
+            itemLista.setTitulo(titulo);
+            itemLista.setMarcado(marcado);
 
-            notas.add(nota);
+            itens.add(itemLista);
             Log.i("Lista:", "AS notas estão sendo listadas" );
 
         }
-        return notas;
+        return itens;
     }
 }

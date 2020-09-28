@@ -230,7 +230,7 @@ public class NotasFragment extends Fragment {
         }
         ));
     }
-    public void dialogCustom (Nota nota){
+    public void dialogCustom (final Nota nota){
         final BottomSheetDialog sheetDialog = new BottomSheetDialog( getActivity(),
                 R.style.Theme_Design_BottomSheetDialog);
 
@@ -239,6 +239,16 @@ public class NotasFragment extends Fragment {
 
         TextView titulo = sheetView.findViewById(R.id.textViewOpcoesNome);
             titulo.setText(nota.getTitulo());
+
+        sheetView.findViewById(R.id.textViewDeletarNota).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            deletar(nota);
+            configurandoClickRecycleview();
+                sheetDialog.dismiss();
+            }
+        });
+
         sheetView.findViewById(R.id.textViewCompartilhar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,7 +280,9 @@ public class NotasFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), EditorActivity.class));
+                Intent intent = new Intent(getActivity(),EditorActivity.class);
+                intent.putExtra("enviarDados",false);
+                startActivity(intent);
             }
         });
     }
@@ -280,6 +292,7 @@ public class NotasFragment extends Fragment {
         para que seja apresentada ao usuario
          */
         Intent intent = new Intent(getActivity(),VisualizacaoActivity.class);
+        intent.putExtra("id",nota.getId());
         intent.putExtra("titulo",nota.getTitulo());
         intent.putExtra("texto",nota.getTexto());
         startActivity(intent);
@@ -288,16 +301,21 @@ public class NotasFragment extends Fragment {
     DAONota dao = new DAONota(getActivity());
     for(Nota not: dao.listar()){
         notas.add(not);
+
     }
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), "Total de itens: "+notas.size(), Toast.LENGTH_SHORT).show();
 
 }
+    public void deletar(Nota notaSelecionada){
+        DAONota dao = new DAONota(getActivity());
+
+        if(dao.deletar(notaSelecionada)){
+            Toast.makeText(getActivity(), "Excluido so sucesso", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getActivity(), "Erro ao Excluido ", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
 
     @Override
     public void onStart() {

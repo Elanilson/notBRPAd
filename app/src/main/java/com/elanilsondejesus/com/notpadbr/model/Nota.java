@@ -1,10 +1,14 @@
 package com.elanilsondejesus.com.notpadbr.model;
 
-public class Nota {
+import java.io.Serializable;
+
+public class Nota implements Serializable {
     private Long id;
     private String titulo;
     private String texto;
     private int cordeFundo;
+    private Nota nota;
+    private String data;
 
     public Nota() {
     }
@@ -16,8 +20,24 @@ public class Nota {
         this.cordeFundo = cordeFundo;
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     public Nota(String titulo) {
         this.titulo = titulo;
+    }
+
+    public Nota getNota() {
+        return nota;
+    }
+
+    public void setNota(Nota nota) {
+        this.nota = nota;
     }
 
     public Long getId() {

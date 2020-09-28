@@ -9,15 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elanilsondejesus.com.notpadbr.R;
+import com.elanilsondejesus.com.notpadbr.model.Lista;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
 
 import java.util.List;
 
-public class AdapterNota extends RecyclerView.Adapter<AdapterNota.MyViewHolder> {
-    List<Nota> notas;
+public class AdapterLista extends RecyclerView.Adapter<AdapterLista.MyViewHolder> {
+    List<Lista> listas;
 
-    public AdapterNota(List<Nota> notas) {
-        this.notas = notas;
+    public AdapterLista(List<Lista> lista) {
+        this.listas = lista;
     }
 
     @NonNull
@@ -25,28 +26,28 @@ public class AdapterNota extends RecyclerView.Adapter<AdapterNota.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
        View lista = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.layout_nota,parent,false);
+               .inflate(R.layout.layout_lista,parent,false);
         return new MyViewHolder(lista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Nota nota =notas.get(position);
-        holder.titulo.setText(nota.getTitulo());
-        holder.data.setText(nota.getData());
+        Lista lista = listas.get(position);
+        holder.titulo.setText(lista.getTitulo());
+        holder.data.setText(lista.getData());
     }
 
     @Override
     public int getItemCount() {
-        return notas.size();
+        return listas.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView titulo, data;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            titulo = itemView.findViewById(R.id.textViewTitulo);
-            data = itemView.findViewById(R.id.textViewData);
+            titulo = itemView.findViewById(R.id.textViewTituloLista);
+            data = itemView.findViewById(R.id.textViewDataLista);
         }
     }
 }
