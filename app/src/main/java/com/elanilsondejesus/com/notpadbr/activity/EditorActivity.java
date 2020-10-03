@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
+import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
+import com.elanilsondejesus.com.notpadbr.fragment.NotasFragment;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.DataUtils;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
@@ -134,6 +136,7 @@ public class EditorActivity extends AppCompatActivity {
             campoTexto.setText(texto);
             if(dao.atualizar(this.nota)){// atualizar com os dados do escopo global
                 Toast.makeText(this, "Atualizado", Toast.LENGTH_SHORT).show();
+
                 finish();
 
             }else{
@@ -146,6 +149,7 @@ public class EditorActivity extends AppCompatActivity {
 
             if(dao.salvar(nota)){
                 Toast.makeText(this, "Salvo", Toast.LENGTH_SHORT).show();
+
                 finish();
             }else{
                 Toast.makeText(this, "Erro ao Salva", Toast.LENGTH_SHORT).show();
@@ -203,13 +207,16 @@ public class EditorActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
+public void enviarSolicitacaoDeRecarregamento(){
+        /*
+        envia uma  referencia  para que seja recarregado nas notas
+         */
+        Intent intent = new Intent(getApplicationContext(), NotasFragment.class);
+        intent.putExtra("recarregarNotas",true);
+        startActivity(intent);
+}
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, "onResume()", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     protected void onPause() {

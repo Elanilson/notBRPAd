@@ -1,8 +1,15 @@
 package com.elanilsondejesus.com.notpadbr.fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +28,7 @@ import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.activity.EditorActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
+import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
@@ -40,6 +50,7 @@ public class NotasFragment extends Fragment {
     private List<Nota> notas = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterNota adapter ;
+    private Dialog dialox;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,20 +101,21 @@ public class NotasFragment extends Fragment {
       // criarNotasTeste();
 
         inicializarComponentes();
-
-
-
+        dialox = new Dialog(getActivity());
         floatingActionButton();
         carregarNotas();
-        iniciarRecycleviewEdefinirLayout();
+
+        iniciarRecycleviewEdefinirLayout(notas);
         configurandoClickRecycleview();
+        Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_SHORT).show();
+
         return view;
     }
 
     public void inicializarComponentes(){
 
     }
-    public void iniciarRecycleviewEdefinirLayout(){
+    public void iniciarRecycleviewEdefinirLayout(List<Nota> notas){
 
         recyclerView = view.findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -220,7 +232,9 @@ public class NotasFragment extends Fragment {
             public void onLongItemClick(View view, int position) {
                 //Recuperar tarefa para edicao
                   Nota notaSelecionada =notas.get(position);
-                        dialogCustom(notaSelecionada);
+//                        dialogCustom(notaSelecionada);
+                //teste(notaSelecionada);
+                opcoes(notaSelecionada);
             }
 
             @Override
@@ -230,49 +244,50 @@ public class NotasFragment extends Fragment {
         }
         ));
     }
-    public void dialogCustom (final Nota nota){
-        final BottomSheetDialog sheetDialog = new BottomSheetDialog( getActivity(),
-                R.style.Theme_Design_BottomSheetDialog);
-
-        View sheetView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.dialogopcoes,(LinearLayout)view.findViewById(R.id.layoutSheet));
-
-        TextView titulo = sheetView.findViewById(R.id.textViewOpcoesNome);
-            titulo.setText(nota.getTitulo());
-
-        sheetView.findViewById(R.id.textViewDeletarNota).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            deletar(nota);
-            configurandoClickRecycleview();
-                sheetDialog.dismiss();
-            }
-        });
-
-        sheetView.findViewById(R.id.textViewCompartilhar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Compartilhando.....", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        sheetView.findViewById(R.id.textViewFavorites).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Favoritando....", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        sheetView.findViewById(R.id.buttonclose).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sheetDialog.dismiss();
-            }
-        });
-
-        sheetDialog.setContentView(sheetView);
-        sheetDialog.show();
-    }
+//    public void dialogCustom (final Nota nota){
+//        final BottomSheetDialog sheetDialog = new BottomSheetDialog( getActivity(),
+//                R.style.Theme_Design_BottomSheetDialog);
+//
+//        View sheetView = LayoutInflater.from(getActivity())
+//                .inflate(R.layout.dialogopcoes,(LinearLayout)view.findViewById(R.id.layoutSheet));
+//
+//        TextView titulo = sheetView.findViewById(R.id.textViewOpcoesNome);
+//            titulo.setText(nota.getTitulo());
+//
+//        sheetView.findViewById(R.id.textViewDeletarNota).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//            deletar(nota);
+//            configurandoClickRecycleview();
+//
+//                sheetDialog.dismiss();
+//            }
+//        });
+//
+//        sheetView.findViewById(R.id.textViewCompartilhar).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "Compartilhando.....", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        sheetView.findViewById(R.id.textViewFavorites).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "Favoritando....", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        sheetView.findViewById(R.id.buttonclose).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                sheetDialog.dismiss();
+//            }
+//        });
+//
+//        sheetDialog.setContentView(sheetView);
+//        sheetDialog.show();
+//    }
     public void floatingActionButton(){
         recyclerView = view.findViewById(R.id.recyclerView);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabButton);
@@ -301,7 +316,6 @@ public class NotasFragment extends Fragment {
     DAONota dao = new DAONota(getActivity());
     for(Nota not: dao.listar()){
         notas.add(not);
-
     }
 
 }
@@ -309,6 +323,9 @@ public class NotasFragment extends Fragment {
         DAONota dao = new DAONota(getActivity());
 
         if(dao.deletar(notaSelecionada)){
+            recarregar();
+
+//            adapter.notifyDataSetChanged();
             Toast.makeText(getActivity(), "Excluido so sucesso", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getActivity(), "Erro ao Excluido ", Toast.LENGTH_SHORT).show();
@@ -317,9 +334,96 @@ public class NotasFragment extends Fragment {
 
     }
 
+
+
+public void recarregar(){
+        carregarNotas();
+    List<Nota> notas = new ArrayList<>();
+    DAONota dao = new DAONota(getActivity());
+    for(Nota  nota: dao.listar()){
+        notas.add(nota);
+    }
+    iniciarRecycleviewEdefinirLayout(notas);
+    adapter.notifyDataSetChanged();
+}
+
+
+    public void opcoes(final Nota nota){
+        dialox.setContentView(R.layout.opcoes);
+        dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        final TextView campoDeletar = dialox.findViewById(R.id.textViewDeletarNota2);
+        Button salvarnovoPeso = dialox.findViewById(R.id.buttonSalvarNovoPEsoAtual);
+        campoDeletar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletar(nota);
+                dialox.dismiss();
+            }
+        });
+
+        salvarnovoPeso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // String titulo = campoTitulo.getText().toString();
+
+            }
+
+
+        });
+
+        dialox.show();
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Toast.makeText(getActivity(), " onStop()", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(getActivity(), " onResume()", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+       notas.clear();
+        Toast.makeText(getActivity(), " onPause() ", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Toast.makeText(getActivity(), " onAttach", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Toast.makeText(getActivity(), " onDetach()", Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+        Toast.makeText(getActivity(), " onStart()", Toast.LENGTH_SHORT).show();
+
+        recarregar();
+
+//        DAONota not = new DAONota(getActivity());
+//        notas.clear();
+//        for(Nota  nota: not.listar()){
+//            notas.add(nota);
+//        }
+        Toast.makeText(getActivity(), " onStart()", Toast.LENGTH_SHORT).show();
 
     }
 }

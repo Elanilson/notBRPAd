@@ -27,6 +27,7 @@ public class DAOItemLista implements ItemListaDAO {
         ContentValues cv = new ContentValues();
         cv.put("titulo",itemLista.getTitulo());
         cv.put("marcado",itemLista.getMarcado());
+        cv.put("idlista",itemLista.getIdLista());
 
         try {
             escrever.insert(Banco_DB.TABELA_ITENSLISTA,null,cv);
@@ -44,6 +45,8 @@ public class DAOItemLista implements ItemListaDAO {
         ContentValues cv = new ContentValues();
         cv.put("titulo",itemLista.getTitulo());
         cv.put("marcado",itemLista.getMarcado());
+        cv.put("idlista",itemLista.getIdLista());
+
         try {
             String [] args ={itemLista.getId().toString()};
             escrever.update(Banco_DB.TABELA_ITENSLISTA,cv,"id=?",args);
@@ -82,14 +85,17 @@ public class DAOItemLista implements ItemListaDAO {
            ItemLista itemLista = new ItemLista();
 
             Long id = c.getLong(c.getColumnIndex("id"));
+            Long idlista = c.getLong(c.getColumnIndex("idlista"));
             String titulo = c.getString(c.getColumnIndex("titulo"));
             // o boolean vai verificar se o retorno é 1 se for retorna true se nao false
             Boolean marcado = (c.getInt(c.getColumnIndex("marcado"))==1);
 
 
+
             itemLista.setId(id);
             itemLista.setTitulo(titulo);
-            itemLista.setMarcado(marcado);
+            itemLista.setStatus(marcado);
+            itemLista.setIdLista(idlista);
 
             itens.add(itemLista);
             Log.i("Lista:", "AS notas estão sendo listadas" );

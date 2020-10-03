@@ -26,7 +26,7 @@ public class Banco_DB extends SQLiteOpenHelper {
 
         String sql2 = "CREATE TABLE IF NOT EXISTS "+TABELA_LISTA+"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), texto TEXT,cordefundo INT, data varchar(15));";
 
-        String sql3 = "CREATE TABLE IF NOT EXISTS "+TABELA_ITENSLISTA+"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), marcado INTEGER DEFAULT 0);";
+        String sql3 = "CREATE TABLE IF NOT EXISTS "+TABELA_ITENSLISTA+"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), marcado INTEGER DEFAULT 0, idlista int);";
         try{
             db.execSQL(sql);
             db.execSQL(sql2);

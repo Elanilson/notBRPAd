@@ -4,7 +4,7 @@
     android:id="@+id/layoutSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog"
+    android:background="@drawable/bg_titulo_editor"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="ADD LISTA"
+        android:text="New List"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/editTextTextNomeLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Ex: Compras"
         android:inputType="textPersonName" />

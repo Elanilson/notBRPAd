@@ -33,7 +33,7 @@ public class AdapterLista extends RecyclerView.Adapter<AdapterLista.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Lista lista = listas.get(position);
-        holder.titulo.setText(lista.getTitulo());
+        holder.titulo.setText(lista.getId()+"");
         holder.data.setText(lista.getData());
     }
 
