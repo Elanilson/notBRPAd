@@ -48,6 +48,7 @@ public class EditorActivity extends AppCompatActivity {
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbarEditor);
         toolbar.setTitle("");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.azul));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

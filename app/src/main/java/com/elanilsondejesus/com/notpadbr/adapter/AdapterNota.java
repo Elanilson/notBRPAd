@@ -1,5 +1,6 @@
 package com.elanilsondejesus.com.notpadbr.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,14 @@ import java.util.List;
 
 public class AdapterNota extends RecyclerView.Adapter<AdapterNota.MyViewHolder> {
     List<Nota> notas;
+    Context context;
 
-    public AdapterNota(List<Nota> notas) {
+    public AdapterNota(List<Nota> notas, Context context) {
         this.notas = notas;
+        this.context = context;
+    }
+    public List<Nota> getNotas(){
+        return this.notas;
     }
 
     @NonNull

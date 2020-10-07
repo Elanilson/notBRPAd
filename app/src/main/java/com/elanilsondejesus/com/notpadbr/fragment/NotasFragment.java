@@ -26,14 +26,17 @@ import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.activity.EditorActivity;
+import com.elanilsondejesus.com.notpadbr.activity.PesquisaActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.melnykov.fab.FloatingActionButton;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +105,8 @@ public class NotasFragment extends Fragment {
 
         inicializarComponentes();
         dialox = new Dialog(getActivity());
-        floatingActionButton();
+        floatingActionButtonADD();
+        floatingActionButtonPesquisa();
         carregarNotas();
 
         iniciarRecycleviewEdefinirLayout(notas);
@@ -120,7 +124,7 @@ public class NotasFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdapterNota(notas);
+        adapter = new AdapterNota(notas,getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
@@ -288,15 +292,28 @@ public class NotasFragment extends Fragment {
 //        sheetDialog.setContentView(sheetView);
 //        sheetDialog.show();
 //    }
-    public void floatingActionButton(){
-        recyclerView = view.findViewById(R.id.recyclerView);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabButton);
-        fab.attachToRecyclerView(recyclerView);
+    public void floatingActionButtonADD(){
+        //recyclerView = view.findViewById(R.id.recyclerView);
+        FloatingActionButton fab =  view.findViewById(R.id.fabmenu_itemadd);
+        //fab.attachToRecyclerView(recyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),EditorActivity.class);
                 intent.putExtra("enviarDados",false);
+                startActivity(intent);
+            }
+        });
+    }
+    public void floatingActionButtonPesquisa(){
+       // recyclerView = view.findViewById(R.id.recyclerView);
+        FloatingActionButton fab =  view.findViewById(R.id.fabmenu_Pesquisaitem);
+        //fab.attachToRecyclerView(recyclerView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PesquisaActivity.class);
+                intent.putExtra("exibir",false);
                 startActivity(intent);
             }
         });
@@ -334,7 +351,38 @@ public class NotasFragment extends Fragment {
 
     }
 
+    public void pesquisarNotas(String texto){
+        //Log.d("pesquisa",  texto );
 
+        List<Nota> listarNostasBusca = new ArrayList<>();
+
+        for ( Nota not : notas ){
+
+            if( not.getTitulo() != null ){
+                String nome = not.getTitulo().toLowerCase();
+                String mensagem = not.getTexto().toLowerCase();
+
+                if( nome.contains( texto ) || mensagem.contains( texto ) ){
+                    listarNostasBusca.add( not );
+                }
+            }else {
+                String nome = not.getTitulo().toLowerCase();
+                String mensagem = not.getTexto().toLowerCase();
+
+                if( nome.contains( texto ) || mensagem.contains( texto ) ){
+                    listarNostasBusca.add( not );
+                }
+            }
+
+
+
+        }
+
+        adapter = new AdapterNota(listarNostasBusca, getActivity());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+    }
 
 public void recarregar(){
         carregarNotas();
@@ -376,45 +424,21 @@ public void recarregar(){
 
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Toast.makeText(getActivity(), " onStop()", Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Toast.makeText(getActivity(), " onResume()", Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
     public void onPause() {
         super.onPause();
        notas.clear();
-        Toast.makeText(getActivity(), " onPause() ", Toast.LENGTH_SHORT).show();
+
 
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Toast.makeText(getActivity(), " onAttach", Toast.LENGTH_SHORT).show();
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Toast.makeText(getActivity(), " onDetach()", Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getActivity(), " onStart()", Toast.LENGTH_SHORT).show();
 
         recarregar();
 
@@ -423,7 +447,7 @@ public void recarregar(){
 //        for(Nota  nota: not.listar()){
 //            notas.add(nota);
 //        }
-        Toast.makeText(getActivity(), " onStart()", Toast.LENGTH_SHORT).show();
+
 
     }
 }

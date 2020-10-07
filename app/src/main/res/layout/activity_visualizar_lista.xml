@@ -93,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="25dp"
             android:src="@drawable/ic_add_24"
+            app:backgroundTint="@color/colorAccent"
             app:layout_anchor="@id/collapse"
             app:layout_anchorGravity="bottom|end|right"
             app:maxImageSize="28dp"

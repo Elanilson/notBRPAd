@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.elanilsondejesus.com.notpadbr.fragment.primeiroFragment"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.PrincipalFragment"
         android:label="fragment_primeiro"
-        tools:layout="@layout/fragment_primeiro" />
+        tools:layout="@layout/fragment_principal" />
     <fragment
         android:id="@+id/menu2"
         android:name="com.elanilsondejesus.com.notpadbr.fragment.SegundoFragment"

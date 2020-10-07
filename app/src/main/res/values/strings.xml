@@ -8,4 +8,16 @@
     <string name="cancelar">Cancelar</string>
     <string name="compartilhar">Compartilhar</string>
     <string name="criar">Criar</string>
+
+
+    <string-array name="planets_array">
+        <item></item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

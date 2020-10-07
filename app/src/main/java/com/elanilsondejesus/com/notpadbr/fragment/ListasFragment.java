@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.activity.EditorActivity;
+import com.elanilsondejesus.com.notpadbr.activity.PesquisaActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizarListaActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterLista;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
@@ -33,8 +34,10 @@ import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
 import com.elanilsondejesus.com.notpadbr.model.Lista;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.melnykov.fab.FloatingActionButton;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +101,8 @@ public class ListasFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_listas, container, false);
-            floatingActionButton();
+            floatingActionButtonADD();
+            floatingActionButtonPesquisa();
             carregarListas();
             iniciarRecycleviewEdefinirLayout(listas);
             configurandoClickRecycleview();
@@ -178,7 +182,7 @@ public class ListasFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewLista);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdapterLista(listas);
+        adapter = new AdapterLista(listas,getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
@@ -191,17 +195,27 @@ public class ListasFragment extends Fragment {
         }
 
     }
-    public void floatingActionButton(){
-        recyclerView = view.findViewById(R.id.recyclerViewLista);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabButtonAdiconaritem);
-        fab.attachToRecyclerView(recyclerView);
+    public void floatingActionButtonADD(){
+        //recyclerView = view.findViewById(R.id.recyclerView);
+        FloatingActionButton fab =  view.findViewById(R.id.fabmenu_itemAdicionarlISTA);
+        //fab.attachToRecyclerView(recyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                adicionarLista();
-
-
+              adicionarLista();
+            }
+        });
+    }
+    public void floatingActionButtonPesquisa(){
+        // recyclerView = view.findViewById(R.id.recyclerView);
+        FloatingActionButton fab =  view.findViewById(R.id.fabmenu_itemPesquisalISTA);
+        //fab.attachToRecyclerView(recyclerView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PesquisaActivity.class);
+                intent.putExtra("exibir",true);
+                startActivity(intent);
             }
         });
     }
@@ -312,7 +326,37 @@ public class ListasFragment extends Fragment {
         }
 
     }
+    public void pesquisarListas(String texto){
+        //Log.d("pesquisa",  texto );
 
+        List<Lista> listarListasBusca = new ArrayList<>();
+
+        for ( Lista list : listas ){
+
+            if( list.getTitulo() != null ){
+                String nome = list.getTitulo().toLowerCase();
+
+                if( nome.contains( texto )  ){
+                    listarListasBusca.add( list );
+                }
+            }else {
+                String nome = list.getTitulo().toLowerCase();
+
+
+                if( nome.contains( texto )  ){
+                    listarListasBusca.add( list);
+                }
+            }
+
+
+
+        }
+
+        adapter = new AdapterLista( listarListasBusca, getActivity());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+    }
     @Override
     public void onStart() {
         super.onStart();

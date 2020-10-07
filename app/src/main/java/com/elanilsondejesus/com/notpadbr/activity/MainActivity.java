@@ -8,7 +8,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,11 +19,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
+import com.elanilsondejesus.com.notpadbr.fragment.NotasFragment;
+import com.elanilsondejesus.com.notpadbr.fragment.PrincipalFragment;
+import com.elanilsondejesus.com.notpadbr.helper.DAONota;
+import com.elanilsondejesus.com.notpadbr.model.Nota;
 import com.google.android.material.navigation.NavigationView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
-    private MaterialSearchView searchViewPesquisa;
+//    private MaterialSearchView searchViewPesquisa;
+
 
 
     @Override
@@ -29,18 +39,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // pesquisar
-        searchViewPesquisa = findViewById(R.id.searchPesquisa);
-        ///configuração da toolbar
+//        searchViewPesquisa = findViewById(R.id.searchPesquisa);
+//        ///configuração da toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(0);
-//        findViewById(R.id.menuToolbar).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
 
         // abrir o drawer ao clicar na imagem menu
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
@@ -57,13 +62,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this,R.id.navigation_header);
         NavigationUI.setupWithNavController(navigationView,navController);
 
-
-
-
-
-
-
-
     }
 
     @Override
@@ -72,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main,menu);
         //configurar bottom pesquisar
-        MenuItem item = menu.findItem(R.id.pesquisa);
-        searchViewPesquisa.setMenuItem(item);
+//        MenuItem item = menu.findItem(R.id.pesquisa);
+//        searchViewPesquisa.setMenuItem(item);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -82,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.pesquisa:
+                startActivity(new Intent(this,PesquisaActivity.class));
 
                 break;
         }

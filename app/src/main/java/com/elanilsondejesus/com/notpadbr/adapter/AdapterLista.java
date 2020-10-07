@@ -1,5 +1,6 @@
 package com.elanilsondejesus.com.notpadbr.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,14 @@ import java.util.List;
 
 public class AdapterLista extends RecyclerView.Adapter<AdapterLista.MyViewHolder> {
     List<Lista> listas;
+    Context context;
 
-    public AdapterLista(List<Lista> lista) {
-        this.listas = lista;
+    public AdapterLista(List<Lista> listas, Context context) {
+        this.listas = listas;
+        this.context = context;
+    }
+    public List<Lista> getListas(){
+        return this.listas;
     }
 
     @NonNull
@@ -33,7 +39,7 @@ public class AdapterLista extends RecyclerView.Adapter<AdapterLista.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Lista lista = listas.get(position);
-        holder.titulo.setText(lista.getId()+"");
+        holder.titulo.setText(lista.getTitulo());
         holder.data.setText(lista.getData());
     }
 

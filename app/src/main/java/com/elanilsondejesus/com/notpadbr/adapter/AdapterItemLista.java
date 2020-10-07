@@ -1,12 +1,24 @@
 package com.elanilsondejesus.com.notpadbr.adapter;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elanilsondejesus.com.notpadbr.R;
+import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
+import com.elanilsondejesus.com.notpadbr.activity.VisualizarListaActivity;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
 import com.elanilsondejesus.com.notpadbr.model.Lista;
@@ -24,6 +38,7 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
     List<ItemLista> itens;
     Context context;
     Boolean check = false;
+
 
 
     public AdapterItemLista(List<ItemLista> itens, Context context) {
@@ -37,6 +52,7 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
 
        View lista = LayoutInflater.from(parent.getContext())
                .inflate(R.layout.layout_item_lista,parent,false);
+
 
         return new MyViewHolder(lista);
     }
@@ -83,8 +99,23 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
             holder.titulo.setPaintFlags(holder.titulo.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         }
+        holder.opcoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  opcoes(itemLista);
+
+                VisualizarListaActivity vi = new VisualizarListaActivity();
+                vi.ativatOpcoes(true,context,itemLista);
+                Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        });
 
     }
+
+
 
 
     @Override
@@ -95,10 +126,18 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView titulo;
         private CheckBox marcado;
+        private ImageButton opcoes;
+        private Spinner spinner;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.textViewTituloItemLista);
             marcado = itemView.findViewById(R.id.checkBoxItem);
+            opcoes = itemView.findViewById(R.id.imageButtonOpcoes);
+            spinner = itemView.findViewById(R.id.spinneropcoes);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                    R.array.planets_array, android.R.layout.simple_spinner_dropdown_item);
+          //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinner.setAdapter(adapter);
 
             if(marcado.isChecked()){
                 Toast.makeText(context, "teste4", Toast.LENGTH_SHORT).show();

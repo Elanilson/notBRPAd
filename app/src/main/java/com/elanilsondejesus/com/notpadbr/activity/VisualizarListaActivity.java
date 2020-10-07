@@ -1,6 +1,7 @@
 package com.elanilsondejesus.com.notpadbr.activity;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.palette.graphics.Palette;
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -17,6 +20,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +47,10 @@ public class VisualizarListaActivity extends AppCompatActivity {
     private List<ItemLista> itens = new ArrayList<>();
     private AdapterItemLista adapter;
     private Dialog dialox;
+    private Dialog dialOpcoes;
     private  Long idLista=null;
+    Boolean ativo = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +59,16 @@ public class VisualizarListaActivity extends AppCompatActivity {
         recebendoDados();
         carregarItens();
         iniciarRecycleviewEdefinirLayout(itens);
-
+       // configurandoClickRecycleview();
 
         dialox = new Dialog(this);
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-      //  toolbar.setTitle(nota.getTitulo());
+        toolbar.setTitle(itemLista.getTitulo());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         //configulando CollapsingToolbarLayout
 
@@ -73,11 +83,14 @@ public class VisualizarListaActivity extends AppCompatActivity {
             }
         });
         FloatingActionButton floatingActionButton = findViewById(R.id.fabButton);
+        floatingActionButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                adicionarItem();
+
             }
         });
     }
@@ -98,9 +111,9 @@ public class VisualizarListaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 //Recuperar tarefa para edicao
-                ItemLista item = itens.get(position);
+               // ItemLista item = itens.get(position);
 
-                Toast.makeText(VisualizarListaActivity.this, "id"+item.getIdLista(), Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(VisualizarListaActivity.this, "id"+item.getIdLista(), Toast.LENGTH_SHORT).show();
 
 
             }
@@ -108,6 +121,9 @@ public class VisualizarListaActivity extends AppCompatActivity {
             @Override
             public void onLongItemClick(View view, int position) {
                 //Recuperar tarefa para edicao
+
+                ItemLista item = itens.get(position);
+                //opcoes(item);
 
             }
 
@@ -130,10 +146,72 @@ public class VisualizarListaActivity extends AppCompatActivity {
 
 
     }
+    public void opcoes(final ItemLista item , Context context){
+        dialOpcoes = new Dialog(context);
+        dialOpcoes.setContentView(R.layout.opcoes_itens);
+        dialOpcoes.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        final TextView campoCriar = dialOpcoes.findViewById(R.id.textViewciraritem);
+        final TextView campoEditar = dialOpcoes.findViewById(R.id.textViewEditarItem);
+        final TextView campoDeletar = dialOpcoes.findViewById(R.id.textViewDeletarlistitem);
+        Button cancelar = dialOpcoes.findViewById(R.id.buttoncancelaropcoes);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                deletar(nota);
+                dialOpcoes.dismiss();
+            }
+        });
+
+        campoCriar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adicionarItem();
+
+            }
+
+
+        });
+        campoEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // String titulo = campoTitulo.getText().toString();
+
+            }
+
+
+        });
+        campoDeletar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // String titulo = campoTitulo.getText().toString();
+
+            }
+
+
+        });
+
+        dialOpcoes.show();
+
+
+    }
+    public  void ativatOpcoes(Boolean ativo, Context context,ItemLista item){
+       this.ativo = ativo;
+        if(ativo){
+            Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
+
+        }
+    }
     public void adicionarItem(){
         dialox.setContentView(R.layout.adicionar_item);
         dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
        final EditText campoTitulo = dialox.findViewById(R.id.editnovoItem);
+        ImageView close = dialox.findViewById(R.id.imageViewCloseItem);
+       close.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               dialox.dismiss();
+           }
+       });
        Button salvarnovoPeso = dialox.findViewById(R.id.buttonSalvarNovoPEsoAtual);
         itens.clear();
         salvarnovoPeso.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +219,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
             public void onClick(View view) {
             String titulo = campoTitulo.getText().toString();
             salvarItem(titulo,itemLista.getIdLista());
+            campoTitulo.setText("");
 
             }
 
@@ -169,11 +248,15 @@ public class VisualizarListaActivity extends AppCompatActivity {
     public void recebendoDados(){
         Bundle bundle = getIntent().getExtras();
         Long id = bundle.getLong("idlista");
+        Boolean teste = bundle.getBoolean("tes");
         itemLista.setIdLista(id);
         idLista=id;
+        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
 
 //        Toast.makeText(this, "id: "+nota.getId()+" titulo: "+nota.getTitulo()+" texto: "+nota.getTexto(), Toast.LENGTH_SHORT).show();
     }
+
 
     public void recarregar(){
        // carregarItens();

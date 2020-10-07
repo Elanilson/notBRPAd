@@ -26,5 +26,20 @@
       <option name="name" value="maven" />
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../../Elanilson%20de%20Jesus/AndroidStudioProjects/NotPadBR/%20https:/dl.bintray.com/unsplash/unsplash-photopicker-android%20" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../../Elanilson%20de%20Jesus/AndroidStudioProjects/NotPadBR/app/%20https:/dl.bintray.com/unsplash/unsplash-photopicker-android%20" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="https://dl.bintray.com/unsplash/unsplash-photopicker-android" />
+    </remote-repository>
   </component>
 </project>

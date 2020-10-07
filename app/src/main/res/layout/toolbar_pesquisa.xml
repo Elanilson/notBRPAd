@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarPesquisa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -16,17 +16,7 @@
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/searchPesquisa"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp" />
-
-    <ImageButton
-        android:id="@+id/menuToolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_menu_24" />
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>

@@ -58,7 +58,8 @@ dependencies {
 
 
     //FloatingActionButton
-    implementation 'com.melnykov:floatingactionbutton:1.3.0'
+    implementation 'com.github.clans:fab:1.6.4'
+
 
 
 
