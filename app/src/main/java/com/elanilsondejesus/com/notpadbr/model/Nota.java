@@ -10,6 +10,7 @@ public class Nota implements Serializable {
     private Nota nota;
     private String data;
     private int caminhoImg;
+    private int status;
 
     public Nota() {
     }
@@ -19,6 +20,14 @@ public class Nota implements Serializable {
         this.titulo = titulo;
         this.texto = texto;
         this.cordeFundo = cordeFundo;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getCaminhoImg() {

@@ -89,6 +89,7 @@ e na activity tema o mesmo dialog recebe um contexto
                             notecolo.setTexto(nota.getTexto());
                             notecolo.setData(nota.getData());
                             notecolo.setCordeFundo(nota.getCordeFundo());
+                            notecolo.setStatus(nota.getStatus());
                             if(dao.atualizar(notecolo)){
                                // Toast.makeText(context, "Atualizado", Toast.LENGTH_SHORT).show();
                                 carregar();

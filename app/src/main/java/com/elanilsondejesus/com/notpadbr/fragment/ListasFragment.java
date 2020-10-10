@@ -27,6 +27,7 @@ import com.elanilsondejesus.com.notpadbr.activity.VisualizarListaActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAOLista;
+import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.DataUtils;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
@@ -360,18 +361,37 @@ public class ListasFragment extends Fragment {
 
 
     }
-    public void deletar(Lista lista){
-        DAOLista dao = new DAOLista(getActivity());
+    public void deletar(final Lista lista){
+        final DAOLista dao = new DAOLista(getActivity());
 
-        if(dao.deletar(lista)){
-            recerrgarLista();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Lista: "+lista.getTitulo());
+        builder.setMessage("Deseja realemente excluir ? Não sera possível recuperar!");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(dao.deletar(lista)){
+                    recerrgarLista();
 
 //            adapter.notifyDataSetChanged();
-            Toast.makeText(getActivity(), "Excluido so sucesso", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(getActivity(), "Erro ao Excluido ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Excluido so sucesso", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), "Erro ao Excluido ", Toast.LENGTH_SHORT).show();
 
-        }
+                }
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+        builder.create();
+        builder.show();
+
+
 
     }
     public void pesquisarListas(String texto){

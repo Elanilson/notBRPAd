@@ -1,7 +1,9 @@
 package com.elanilsondejesus.com.notpadbr.fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -315,7 +317,7 @@ public class NotasFragment extends Fragment {
     public void floatingActionButtonADD() {
         //recyclerView = view.findViewById(R.id.recyclerView);
         FloatingActionButton fab = view.findViewById(R.id.fabmenu_itemadd);
-        //fab.attachToRecyclerView(recyclerView);
+//        fab.attachToRecyclerView(recyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -325,6 +327,7 @@ public class NotasFragment extends Fragment {
             }
         });
     }
+
 
     public void floatingActionButtonPesquisa() {
         // recyclerView = view.findViewById(R.id.recyclerView);
@@ -355,6 +358,7 @@ public class NotasFragment extends Fragment {
         intent.putExtra("texto", nota.getTexto());
         intent.putExtra("data", nota.getData());
         intent.putExtra("caminhoImg", nota.getCaminhoImg());
+        intent.putExtra("status", nota.getStatus());
         //Toast.makeText(getActivity(), "cami: "+nota.getCaminhoImg(), Toast.LENGTH_SHORT).show();
 
        startActivity(intent);
@@ -370,18 +374,37 @@ public class NotasFragment extends Fragment {
 
     }
 
-    public void deletar(Nota notaSelecionada) {
-        DAONota dao = new DAONota(getActivity());
+    public void deletar(final Nota notaSelecionada) {
 
-        if (dao.deletar(notaSelecionada)) {
-            recarregar();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Nota: "+notaSelecionada.getTitulo());
+        builder.setMessage("Deseja realemente excluir ?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DAONota dao = new DAONota(getActivity());
+                notaSelecionada.setStatus(0);
+                if (dao.atualizar(notaSelecionada)) {
+                    recarregar();
 
 //            adapter.notifyDataSetChanged();
-            Toast.makeText(getActivity(), "Excluido so sucesso", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getActivity(), "Erro ao Excluido ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Excluido so sucesso", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Erro ao Excluido ", Toast.LENGTH_SHORT).show();
 
-        }
+                }
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+        builder.create();
+        builder.show();
+
 
     }
 

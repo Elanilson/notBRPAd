@@ -10,4 +10,5 @@ public interface NotaDAO {
     public Boolean atualizar(Nota nota);
     public Boolean deletar(Nota nota);
     public List<Nota> listar();
+    public List<Nota> listarInativo();
 }

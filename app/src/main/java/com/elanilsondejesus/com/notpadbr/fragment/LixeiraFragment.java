@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
@@ -120,6 +121,7 @@ public class LixeiraFragment extends Fragment {
 //                        dialogCustom(notaSelecionada);
                 //teste(notaSelecionada);
                 //opcoes(notaSelecionada);
+                Toast.makeText(getActivity(), "Status: "+notaSelecionada.getStatus(), Toast.LENGTH_SHORT).show();
 
             }
 
@@ -132,7 +134,7 @@ public class LixeiraFragment extends Fragment {
     }
     public void carregarNotas() {
         DAONota dao = new DAONota(getActivity());
-        for (Nota not : dao.listar()) {
+        for (Nota not : dao.listarInativo()) {
             notas.add(not);
             nota.setCaminhoImg(not.getCaminhoImg());
 

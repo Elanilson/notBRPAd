@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterItemLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
+import com.elanilsondejesus.com.notpadbr.helper.DAOLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
@@ -50,6 +51,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
     private Dialog dialOpcoes;
     private  Long idLista=null;
     Boolean ativo = false;
+    private  Lista lista = new Lista();
 
 
     @Override
@@ -60,11 +62,11 @@ public class VisualizarListaActivity extends AppCompatActivity {
         carregarItens();
         iniciarRecycleviewEdefinirLayout(itens);
        // configurandoClickRecycleview();
-
+            carregarLista();
         dialox = new Dialog(this);
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(itemLista.getTitulo());
+        toolbar.setTitle(lista.getTitulo());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -248,13 +250,28 @@ public class VisualizarListaActivity extends AppCompatActivity {
     public void recebendoDados(){
         Bundle bundle = getIntent().getExtras();
         Long id = bundle.getLong("idlista");
-        Boolean teste = bundle.getBoolean("tes");
+
         itemLista.setIdLista(id);
         idLista=id;
+        lista.setId(id);
 //        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
 //        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
 
 //        Toast.makeText(this, "id: "+nota.getId()+" titulo: "+nota.getTitulo()+" texto: "+nota.getTexto(), Toast.LENGTH_SHORT).show();
+    }
+    public void carregarLista(){
+        /*
+        pega somente o titulo da nome selecionada
+         */
+
+        DAOLista dao = new DAOLista(getApplicationContext());
+        for(Lista list: dao.listar()){
+            if(list.getId() == idLista){
+                lista.setTitulo(list.getTitulo());
+
+            }
+
+        }
     }
 
 

@@ -29,6 +29,7 @@ public class DAONota implements NotaDAO {
         cv.put("cordefundo",nota.getCordeFundo());
         cv.put("data",nota.getData());
         cv.put("caminhoImg",nota.getCaminhoImg());
+        cv.put("status",nota.getStatus());
 
         try {
             escrever.insert(Banco_DB.TABELA_NOTA,null,cv);
@@ -49,6 +50,7 @@ public class DAONota implements NotaDAO {
         cv.put("cordefundo",nota.getCordeFundo());
         cv.put("data",nota.getData());
         cv.put("caminhoImg",nota.getCaminhoImg());
+        cv.put("status",nota.getStatus());
 
         try {
             String [] args ={nota.getId().toString()};
@@ -81,7 +83,7 @@ public class DAONota implements NotaDAO {
     @Override
     public List<Nota> listar() {
         List<Nota> notas =new ArrayList<>();
-        String sql ="SELECT * FROM "+Banco_DB.TABELA_NOTA +"";
+        String sql ="SELECT * FROM "+Banco_DB.TABELA_NOTA +" WHERE status=1;";
         Cursor c = ler.rawQuery(sql,null);
 
         while (c.moveToNext()) {
@@ -90,6 +92,7 @@ public class DAONota implements NotaDAO {
             Long id = c.getLong(c.getColumnIndex("id"));
             String titulo = c.getString(c.getColumnIndex("titulo"));
             String texto = c.getString(c.getColumnIndex("texto"));
+            int status = c.getInt(c.getColumnIndex("status"));
             int cordefundo = c.getInt(c.getColumnIndex("cordefundo"));
             int caminhoImg = c.getInt(c.getColumnIndex("caminhoImg"));
             String data = c.getString(c.getColumnIndex("data"));
@@ -101,6 +104,40 @@ public class DAONota implements NotaDAO {
             nota.setCordeFundo(cordefundo);
             nota.setData(data);
             nota.setCaminhoImg(caminhoImg);
+            nota.setStatus(status);
+
+            notas.add(nota);
+            Log.i("Lista:", "AS notas estão sendo listadas" );
+
+        }
+        return notas;
+    }
+
+    @Override
+    public List<Nota> listarInativo() {
+        List<Nota> notas =new ArrayList<>();
+        String sql ="SELECT * FROM "+Banco_DB.TABELA_NOTA +" WHERE status=0;";
+        Cursor c = ler.rawQuery(sql,null);
+
+        while (c.moveToNext()) {
+            Nota nota = new Nota();
+
+            Long id = c.getLong(c.getColumnIndex("id"));
+            String titulo = c.getString(c.getColumnIndex("titulo"));
+            String texto = c.getString(c.getColumnIndex("texto"));
+            int status = c.getInt(c.getColumnIndex("status"));
+            int cordefundo = c.getInt(c.getColumnIndex("cordefundo"));
+            int caminhoImg = c.getInt(c.getColumnIndex("caminhoImg"));
+            String data = c.getString(c.getColumnIndex("data"));
+
+
+            nota.setId(id);
+            nota.setTitulo(titulo);
+            nota.setTexto(texto);
+            nota.setCordeFundo(cordefundo);
+            nota.setData(data);
+            nota.setCaminhoImg(caminhoImg);
+            nota.setStatus(status);
 
             notas.add(nota);
             Log.i("Lista:", "AS notas estão sendo listadas" );

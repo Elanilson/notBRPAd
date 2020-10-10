@@ -129,6 +129,7 @@ public class EditorActivity extends AppCompatActivity {
 //        }
         nota.setTitulo(titulo);
         nota.setTexto(texto);
+        nota.setStatus(1);
         nota.setData(DataUtils.getDataAtual());
         if(editarNota){
             this.nota.setTitulo(titulo);
