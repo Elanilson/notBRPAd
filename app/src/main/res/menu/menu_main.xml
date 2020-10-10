@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/pesquisa"
-        android:icon="@drawable/ic_search_24"
-        android:title="Item"
-        app:showAsAction="always" />
+        android:id="@+id/opcoes"
+        android:icon="@drawable/ic_opcoes_24"
+        android:title="Opcoes" />
+    <item android:title="Layout" />
+    <item android:title="Sincronizar" />
+    <item android:title="Configuração" />
 </menu>

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.elanilsondejesus.com.notpadbr"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -59,6 +59,12 @@ dependencies {
 
     //FloatingActionButton
     implementation 'com.github.clans:fab:1.6.4'
+
+    //gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
+    //spots-dialog
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
 
 
 

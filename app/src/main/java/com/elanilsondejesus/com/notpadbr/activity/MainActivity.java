@@ -8,26 +8,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
-import com.elanilsondejesus.com.notpadbr.fragment.NotasFragment;
-import com.elanilsondejesus.com.notpadbr.fragment.PrincipalFragment;
-import com.elanilsondejesus.com.notpadbr.helper.DAONota;
-import com.elanilsondejesus.com.notpadbr.model.Nota;
 import com.google.android.material.navigation.NavigationView;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 //    private MaterialSearchView searchViewPesquisa;
@@ -69,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main,menu);
+
         //configurar bottom pesquisar
 //        MenuItem item = menu.findItem(R.id.pesquisa);
 //        searchViewPesquisa.setMenuItem(item);
@@ -79,11 +71,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.pesquisa:
-                startActivity(new Intent(this,PesquisaActivity.class));
+            case R.id.opcoes:
+
+
+
 
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

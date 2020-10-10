@@ -11,10 +11,10 @@
         android:label="fragment_primeiro"
         tools:layout="@layout/fragment_principal" />
     <fragment
-        android:id="@+id/menu2"
-        android:name="com.elanilsondejesus.com.notpadbr.fragment.SegundoFragment"
-        android:label="fragment_segundo"
-        tools:layout="@layout/fragment_segundo" />
+        android:id="@+id/lixeira"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.LixeiraFragment"
+        android:label="Lixeira"
+        tools:layout="@layout/fragment_lixeira" />
     <fragment
         android:id="@+id/menu3"
         android:name="com.elanilsondejesus.com.notpadbr.fragment.TerceiroFragment"

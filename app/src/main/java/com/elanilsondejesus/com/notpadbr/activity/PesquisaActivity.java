@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterLista;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
-import com.elanilsondejesus.com.notpadbr.fragment.ListasFragment;
-import com.elanilsondejesus.com.notpadbr.fragment.NotasFragment;
 import com.elanilsondejesus.com.notpadbr.helper.DAOLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
@@ -29,7 +27,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PesquisaActivity extends AppCompatActivity {
     private MaterialSearchView searchView;
@@ -288,7 +285,7 @@ public class PesquisaActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main,menu);
         //configurar bottom pesquisar
-        MenuItem item = menu.findItem(R.id.pesquisa);
+        MenuItem item = menu.findItem(R.id.opcoes);
         searchView.setMenuItem(item);
         return super.onCreateOptionsMenu(menu);
     }
@@ -332,7 +329,7 @@ public class PesquisaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.pesquisa:
+            case R.id.opcoes:
                 notas.clear();
                 break;
         }

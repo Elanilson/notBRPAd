@@ -5,6 +5,7 @@
     <color name="colorAccent">#d9823b</color>
     <color name="divisor">#9F9F9E</color>
     <color name="black">#171717</color>
-    <color name="branco_escuro">#A59E9E</color>
+    <color name="cinza_escuro">#D6D3D3</color>
     <color name="azul">#4b4676</color>
+    <color name="fundoIMG">#9A0A0917</color>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -34,16 +35,10 @@
 
         <ImageButton
             android:id="@+id/imageButtonOpcoes"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_opcoes_24" />
-
-        <Spinner
-            android:id="@+id/spinneropcoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_opcoes_24" />
 
     </LinearLayout>
 

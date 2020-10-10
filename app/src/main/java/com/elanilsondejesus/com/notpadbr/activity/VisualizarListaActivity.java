@@ -197,7 +197,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
     public  void ativatOpcoes(Boolean ativo, Context context,ItemLista item){
        this.ativo = ativo;
         if(ativo){
-            Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -240,7 +240,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
         if(dao.salvar(item)){
             recarregar();
 
-            Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "Erro ao salvar item", Toast.LENGTH_SHORT).show();
         }
@@ -251,11 +251,12 @@ public class VisualizarListaActivity extends AppCompatActivity {
         Boolean teste = bundle.getBoolean("tes");
         itemLista.setIdLista(id);
         idLista=id;
-        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "TEste:"+teste, Toast.LENGTH_SHORT).show();
 
 //        Toast.makeText(this, "id: "+nota.getId()+" titulo: "+nota.getTitulo()+" texto: "+nota.getTexto(), Toast.LENGTH_SHORT).show();
     }
+
 
 
     public void recarregar(){

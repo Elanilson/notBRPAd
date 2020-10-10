@@ -28,6 +28,7 @@ public class DAONota implements NotaDAO {
         cv.put("texto",nota.getTexto());
         cv.put("cordefundo",nota.getCordeFundo());
         cv.put("data",nota.getData());
+        cv.put("caminhoImg",nota.getCaminhoImg());
 
         try {
             escrever.insert(Banco_DB.TABELA_NOTA,null,cv);
@@ -47,6 +48,8 @@ public class DAONota implements NotaDAO {
         cv.put("texto",nota.getTexto());
         cv.put("cordefundo",nota.getCordeFundo());
         cv.put("data",nota.getData());
+        cv.put("caminhoImg",nota.getCaminhoImg());
+
         try {
             String [] args ={nota.getId().toString()};
             escrever.update(Banco_DB.TABELA_NOTA,cv,"id=?",args);
@@ -88,6 +91,7 @@ public class DAONota implements NotaDAO {
             String titulo = c.getString(c.getColumnIndex("titulo"));
             String texto = c.getString(c.getColumnIndex("texto"));
             int cordefundo = c.getInt(c.getColumnIndex("cordefundo"));
+            int caminhoImg = c.getInt(c.getColumnIndex("caminhoImg"));
             String data = c.getString(c.getColumnIndex("data"));
 
 
@@ -96,6 +100,7 @@ public class DAONota implements NotaDAO {
             nota.setTexto(texto);
             nota.setCordeFundo(cordefundo);
             nota.setData(data);
+            nota.setCaminhoImg(caminhoImg);
 
             notas.add(nota);
             Log.i("Lista:", "AS notas estão sendo listadas" );

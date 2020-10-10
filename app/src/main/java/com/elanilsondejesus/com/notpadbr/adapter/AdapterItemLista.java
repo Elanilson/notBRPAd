@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizarListaActivity;
+import com.elanilsondejesus.com.notpadbr.fragment.NotasFragment;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
 import com.elanilsondejesus.com.notpadbr.model.Lista;
@@ -99,19 +103,7 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
             holder.titulo.setPaintFlags(holder.titulo.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         }
-        holder.opcoes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              //  opcoes(itemLista);
 
-                VisualizarListaActivity vi = new VisualizarListaActivity();
-                vi.ativatOpcoes(true,context,itemLista);
-                Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
-
-
-
-            }
-        });
 
     }
 
@@ -123,27 +115,58 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
         return itens.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
         private TextView titulo;
         private CheckBox marcado;
         private ImageButton opcoes;
-        private Spinner spinner;
+        private LinearLayout layout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.textViewTituloItemLista);
             marcado = itemView.findViewById(R.id.checkBoxItem);
             opcoes = itemView.findViewById(R.id.imageButtonOpcoes);
-            spinner = itemView.findViewById(R.id.spinneropcoes);
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                    R.array.planets_array, android.R.layout.simple_spinner_dropdown_item);
-          //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-            spinner.setAdapter(adapter);
+            layout = itemView.findViewById(R.id.layoutItem);
+            opcoes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    menuPopUp(view);
+                  //  Toast.makeText(context, "toctco", Toast.LENGTH_SHORT).show();
 
-            if(marcado.isChecked()){
-                Toast.makeText(context, "teste4", Toast.LENGTH_SHORT).show();
+                }
+            });
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-            }
 
+
+                }
+            });
+            layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(context, "long", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+
+
+        }
+
+        private void menuPopUp(View view) {
+            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+            popupMenu.inflate(R.menu.menu_opcoes);
+            popupMenu.setOnMenuItemClickListener(this);
+            popupMenu.show();
+        }
+        @Override
+        public void onClick(View view) {
+
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            return false;
         }
     }
 

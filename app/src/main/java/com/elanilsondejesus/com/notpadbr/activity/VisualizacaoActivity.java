@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
 
+import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -55,7 +56,8 @@ public class VisualizacaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizacao);
-        receberdadosTema();
+       // receberdadosTema();
+//        carregartema();
         recebendoDados();
         inicializarComponentes();
 
@@ -88,8 +90,9 @@ public class VisualizacaoActivity extends AppCompatActivity {
             }
         });
         // inicia com a imagegm padrao fornecida abaixo
-        imagemTema = findViewById(R.id.imagemTema);
-        imagemTema.setImageResource(R.drawable.imagem4);
+        carregarFotoTema();
+
+
         FloatingActionButton floatingActionButton = findViewById(R.id.fabButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,24 +104,53 @@ public class VisualizacaoActivity extends AppCompatActivity {
 
 
     }
-    public void receberdadosTema(){
-        Bundle bundle = getIntent().getExtras();
-        imagemteste = bundle.getInt("imagem");
-        // da uma olhada depois nisso
-        if(imagemTema != null){
-            imagemTema.setImageResource(imagemteste);
+//    public void receberdadosTema(){
+//        Bundle bundle = getIntent().getExtras();
+//        imagemteste = bundle.getInt("imagem");
+//        // da uma olhada depois nisso
+//        if(imagemTema != null){
+//            imagemTema.setImageResource(imagemteste);
+//        }
+//
+//
+//    }
+//    public void carregartema(){
+//        /*
+//        verifica se e diferente de 0 se for ele vai carregar o caminho da img
+//         */
+//       int caminho =  0;
+//       caminho = nota.getCaminhoImg();
+//        if(caminho != 0 ){
+//            imagemTema.setImageResource(nota.getCaminhoImg());
+//        }else{
+//           // imagemTema.setImageResource(imagemteste);
+//        }
+//    }
+    public void carregarFotoTema(){
+        if(nota.getCaminhoImg() != 0){
+            /*
+            se o caminho da imagem existir no banco de dados ele sera exibida
+             */
+            imagemTema.setImageResource(nota.getCaminhoImg());
+        }else{
+            imagemTema.setImageResource(R.drawable.imagem4);
         }
-
-
     }
     public void recebendoDados(){
         Bundle bundle = getIntent().getExtras();
-        Long id = bundle.getLong("id");
-        String titulo = bundle.getString("titulo");
-        String texto = bundle.getString("texto");
-        nota.setId(id);
-        nota.setTitulo(titulo);
-        nota.setTexto(texto);
+        Long id = null ;
+
+          id = bundle.getLong("id") ;
+           String titulo = bundle.getString("titulo");
+           String texto = bundle.getString("texto");
+           String data = bundle.getString("data");
+           int caminhoImg = bundle.getInt("caminhoImg");
+           nota.setId(id);
+           nota.setTitulo(titulo);
+           nota.setTexto(texto);
+           nota.setData(data);
+           nota.setCaminhoImg(caminhoImg);
+
 //        Toast.makeText(this, "id: "+nota.getId()+" titulo: "+nota.getTitulo()+" texto: "+nota.getTexto(), Toast.LENGTH_SHORT).show();
     }
 
@@ -133,7 +165,11 @@ public class VisualizacaoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.tema:
-                startActivity(new Intent(VisualizacaoActivity.this,TemaActivity.class));
+
+                Intent intent = new Intent(VisualizacaoActivity.this,TemaActivity.class);
+                intent.putExtra("id",nota.getId());
+                startActivity(intent);
+//                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -145,8 +181,11 @@ public class VisualizacaoActivity extends AppCompatActivity {
         intent.putExtra("id",nota.getId());
         intent.putExtra("titulo",nota.getTitulo());
         intent.putExtra("texto",nota.getTexto());
+        intent.putExtra("data",nota.getData());
+        intent.putExtra("caminhoImg",nota.getCaminhoImg());
         intent.putExtra("editar",true);
         startActivity(intent);
+        finish();
     }
 
 
@@ -155,19 +194,37 @@ public class VisualizacaoActivity extends AppCompatActivity {
     public void inicializarComponentes(){
 //        campoTitulo = findViewById(R.id.editTitulo);
         campoTexto = findViewById(R.id.visuTexto);
+        imagemTema = findViewById(R.id.imagemTema);
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+       // carregarFotoTema();
+
+
+
+    }
+
+
+
+
+    public void recarregarTema(){
+        DAONota dao = new DAONota(getApplicationContext());
+        for(Nota n: dao.listar()){
+            if(n.getId() == nota.getId()){
+                imagemTema.setImageResource(n.getCaminhoImg());
+            }
+
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-    // carregando as imagens
-          if(imagemteste != 0){
-              imagemTema.setImageResource(imagemteste);
-          }else{
-              imagemTema.setImageResource(R.drawable.imagem1);
-          }
 
+        recarregarTema();
 
     }
 }

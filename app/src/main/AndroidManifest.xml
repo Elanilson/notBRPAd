@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PesquisaActivity"></activity>
+        <activity android:name=".activity.VisualizarTemaMainActivity"></activity>
+        <activity android:name=".activity.PesquisaActivity" />
         <activity android:name=".activity.TemaActivity" />
         <activity android:name=".activity.VisualizarListaActivity" />
         <activity

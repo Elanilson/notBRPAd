@@ -169,10 +169,14 @@ public class EditorActivity extends AppCompatActivity {
             Long id = bundle.getLong("id");
             String titulo = bundle.getString("titulo");
             String texto = bundle.getString("texto");
+            String data = bundle.getString("data");
+            int caminhoImg = bundle.getInt("caminhoImg");
             this.editarNota = editarnota;
             nota.setId(id);
             nota.setTitulo(titulo);
             nota.setTexto(texto);
+            nota.setData(data);
+            nota.setCaminhoImg(caminhoImg);
         }
 
 

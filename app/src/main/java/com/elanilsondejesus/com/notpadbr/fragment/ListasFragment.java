@@ -1,6 +1,8 @@
 package com.elanilsondejesus.com.notpadbr.fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,27 +18,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
-import com.elanilsondejesus.com.notpadbr.activity.EditorActivity;
 import com.elanilsondejesus.com.notpadbr.activity.PesquisaActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizarListaActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterLista;
-import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAOLista;
-import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.DataUtils;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
 import com.elanilsondejesus.com.notpadbr.model.Lista;
-import com.elanilsondejesus.com.notpadbr.model.Nota;
 import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 
 import java.util.ArrayList;
@@ -52,8 +47,13 @@ public class ListasFragment extends Fragment {
     private RecyclerView recyclerView;
     private AdapterLista adapter;
     private List<Lista> listas = new ArrayList<>();
-    private Lista lista = new Lista();
+   // private Lista lista = new Lista();
     private Dialog dialox;
+    private AlertDialog.Builder dialog;
+
+
+
+    private Lista listaSelecionada = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,6 +107,7 @@ public class ListasFragment extends Fragment {
             iniciarRecycleviewEdefinirLayout(listas);
             configurandoClickRecycleview();
         dialox = new Dialog(getActivity());
+         dialog = new AlertDialog.Builder(getActivity());
         return view;
     }
 //    public void dialogCustom (){
@@ -182,7 +183,7 @@ public class ListasFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewLista);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdapterLista(listas,getActivity());
+        adapter = new AdapterLista(listas,getActivity(),dialox);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
@@ -226,9 +227,9 @@ public class ListasFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 //Recuperar tarefa para edicao
-                Lista lista = listas.get(position);
+                listaSelecionada = listas.get(position);
                 Intent intent = new Intent(getActivity(), VisualizarListaActivity.class);
-             intent.putExtra("idlista",lista.getId());
+             intent.putExtra("idlista",listaSelecionada.getId());
               startActivity(intent);
 
             }
@@ -236,8 +237,8 @@ public class ListasFragment extends Fragment {
             @Override
             public void onLongItemClick(View view, int position) {
                 //Recuperar tarefa para edicao
-                Lista lista = listas.get(position);
-                opcoes(lista);
+                listaSelecionada = listas.get(position);
+                opcoes(listaSelecionada);
 
             }
 
@@ -259,10 +260,29 @@ public class ListasFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
     public void opcoes(final Lista lista){
-        dialox.setContentView(R.layout.opcoes);
+        dialox.setContentView(R.layout.opcoeslist);
         dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
-        final TextView campoDeletar = dialox.findViewById(R.id.textViewDeletarNota2);
-        Button salvarnovoPeso = dialox.findViewById(R.id.buttonSalvarNovoPEsoAtual);
+        final TextView campoDeletar = dialox.findViewById(R.id.textViewDeletarLista);
+        final TextView campoAdicionar = dialox.findViewById(R.id.textViewAdionarLista);
+        final TextView campoEditar = dialox.findViewById(R.id.textViewEditarLista);
+        Button cancelar = dialox.findViewById(R.id.buttonCancelarLista);
+        campoEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               editar();
+
+                Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
+            }
+        });
+        campoAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                editar();
+                Toast.makeText(getActivity(), "add", Toast.LENGTH_SHORT).show();
+
+                dialox.dismiss();
+            }
+        });
         campoDeletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -272,10 +292,11 @@ public class ListasFragment extends Fragment {
             }
         });
 
-        salvarnovoPeso.setOnClickListener(new View.OnClickListener() {
+        cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // String titulo = campoTitulo.getText().toString();
+                dialox.dismiss();
 
             }
 
@@ -284,6 +305,33 @@ public class ListasFragment extends Fragment {
 
         dialox.show();
 
+
+    }
+
+    public void editar(){
+        dialox.setContentView(R.layout.dialogalterarlista);
+         EditText campoTx = dialox.findViewById(R.id.testeeee);
+        dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        Button atualizar = dialox.findViewById(R.id.buttonsalvarLista);
+        String titulo = campoTx.getText().toString();
+
+        if(!titulo.isEmpty() && titulo != null){
+            listaSelecionada.setTitulo(titulo);
+        }
+        atualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              DAOLista dao = new DAOLista(getActivity());
+                if(dao.atualizar(listaSelecionada)){
+                    Toast.makeText(getActivity(), "Atualizado: ", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), "Erro ao atualizar", Toast.LENGTH_SHORT).show();
+
+                }
+                recerrgarLista();
+                dialox.dismiss();
+            }
+        });
 
     }
     public void deletarItensDeLista(Lista lista){
@@ -352,7 +400,7 @@ public class ListasFragment extends Fragment {
 
         }
 
-        adapter = new AdapterLista( listarListasBusca, getActivity());
+        adapter = new AdapterLista( listarListasBusca, getActivity(),dialox);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

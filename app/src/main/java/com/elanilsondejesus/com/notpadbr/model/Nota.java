@@ -9,6 +9,7 @@ public class Nota implements Serializable {
     private int cordeFundo;
     private Nota nota;
     private String data;
+    private int caminhoImg;
 
     public Nota() {
     }
@@ -18,6 +19,14 @@ public class Nota implements Serializable {
         this.titulo = titulo;
         this.texto = texto;
         this.cordeFundo = cordeFundo;
+    }
+
+    public int getCaminhoImg() {
+        return caminhoImg;
+    }
+
+    public void setCaminhoImg(int caminhoImg) {
+        this.caminhoImg = caminhoImg;
     }
 
     public String getData() {
