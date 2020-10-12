@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Nota implements Serializable {
     private Long id;
+    private Long idPasta;
     private String titulo;
     private String texto;
     private int cordeFundo;
@@ -15,11 +16,15 @@ public class Nota implements Serializable {
     public Nota() {
     }
 
-    public Nota(Long id, String titulo, String texto, int cordeFundo) {
-        this.id = id;
-        this.titulo = titulo;
-        this.texto = texto;
-        this.cordeFundo = cordeFundo;
+
+
+
+    public Long getIdPasta() {
+        return idPasta;
+    }
+
+    public void setIdPasta(Long idPasta) {
+        this.idPasta = idPasta;
     }
 
     public int getStatus() {

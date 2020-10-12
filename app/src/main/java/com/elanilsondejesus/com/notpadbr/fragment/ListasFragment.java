@@ -28,6 +28,7 @@ import com.elanilsondejesus.com.notpadbr.adapter.AdapterLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAOItemLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAOLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
+import com.elanilsondejesus.com.notpadbr.helper.DaoPasta;
 import com.elanilsondejesus.com.notpadbr.helper.DataUtils;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
 import com.elanilsondejesus.com.notpadbr.model.ItemLista;
@@ -270,9 +271,9 @@ public class ListasFragment extends Fragment {
         campoEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               editar();
+               editar(lista);
 
-                Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
+
             }
         });
         campoAdicionar.setOnClickListener(new View.OnClickListener() {
@@ -309,30 +310,32 @@ public class ListasFragment extends Fragment {
 
     }
 
-    public void editar(){
-        dialox.setContentView(R.layout.dialogalterarlista);
-         EditText campoTx = dialox.findViewById(R.id.testeeee);
-        dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
-        Button atualizar = dialox.findViewById(R.id.buttonsalvarLista);
-        String titulo = campoTx.getText().toString();
+    public void editar(final Lista lista){
 
-        if(!titulo.isEmpty() && titulo != null){
-            listaSelecionada.setTitulo(titulo);
-        }
-        atualizar.setOnClickListener(new View.OnClickListener() {
+        dialox.setContentView(R.layout.dialogaddpasta);
+        dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        final EditText campoTitulo = dialox.findViewById(R.id.editTextaddPasta);
+        final TextView campoalterar = dialox.findViewById(R.id.textViewAlteraTitulo);
+        Button salvarPasta = dialox.findViewById(R.id.buttonsalvarPasta);
+        campoalterar.setText("Alterar titulo:");
+        salvarPasta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              DAOLista dao = new DAOLista(getActivity());
-                if(dao.atualizar(listaSelecionada)){
-                    Toast.makeText(getActivity(), "Atualizado: ", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getActivity(), "Erro ao atualizar", Toast.LENGTH_SHORT).show();
+                String titulo = campoTitulo.getText().toString();
+                lista.setTitulo(titulo);
+                DAOLista dao = new DAOLista(getActivity());
+                if(dao.atualizar(lista)){
+                    Toast.makeText(getActivity(), "Atualizado com sucesso", Toast.LENGTH_SHORT).show();
 
                 }
                 recerrgarLista();
                 dialox.dismiss();
             }
+
+
         });
+
+        dialox.show();
 
     }
     public void deletarItensDeLista(Lista lista){

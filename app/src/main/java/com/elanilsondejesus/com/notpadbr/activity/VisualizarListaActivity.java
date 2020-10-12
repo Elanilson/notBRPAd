@@ -115,8 +115,6 @@ public class VisualizarListaActivity extends AppCompatActivity {
                 //Recuperar tarefa para edicao
                // ItemLista item = itens.get(position);
 
-              //  Toast.makeText(VisualizarListaActivity.this, "id"+item.getIdLista(), Toast.LENGTH_SHORT).show();
-
 
             }
 

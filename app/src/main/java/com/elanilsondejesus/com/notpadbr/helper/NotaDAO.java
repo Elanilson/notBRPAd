@@ -11,4 +11,5 @@ public interface NotaDAO {
     public Boolean deletar(Nota nota);
     public List<Nota> listar();
     public List<Nota> listarInativo();
+    public List<Nota> listarItemPasta(Long id);
 }

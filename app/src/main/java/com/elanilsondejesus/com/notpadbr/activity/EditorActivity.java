@@ -35,6 +35,7 @@ public class EditorActivity extends AppCompatActivity {
     private Nota nota = new Nota();
     private Boolean editarNota = false;
     private boolean dadosenviados = false;
+    private Long idpasta =null;
 
 
     @Override
@@ -51,6 +52,7 @@ public class EditorActivity extends AppCompatActivity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.azul));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toast.makeText(this, "id: "+idpasta, Toast.LENGTH_SHORT).show();
 
         /*
         verificar se tem dados antes de sair da tela implmentar isso
@@ -129,15 +131,18 @@ public class EditorActivity extends AppCompatActivity {
 //        }
         nota.setTitulo(titulo);
         nota.setTexto(texto);
+        nota.setIdPasta(idpasta);
         nota.setStatus(1);
         nota.setData(DataUtils.getDataAtual());
         if(editarNota){
             this.nota.setTitulo(titulo);
             this.nota.setTexto(texto);
+            this.nota.setIdPasta(idpasta);
+            this.nota.setStatus(1);
             campoTitulo.setText(titulo);
             campoTexto.setText(texto);
             if(dao.atualizar(this.nota)){// atualizar com os dados do escopo global
-                Toast.makeText(this, "Atualizado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Atualizado"+idpasta, Toast.LENGTH_SHORT).show();
 
                 finish();
 
@@ -165,6 +170,7 @@ public class EditorActivity extends AppCompatActivity {
     public void recebendoDados(){
         Bundle bundle = getIntent().getExtras();
         dadosenviados = bundle.getBoolean("enviarDados");
+        idpasta = bundle.getLong("idPasta");
         boolean editarnota = bundle.getBoolean("editar");
         if(dadosenviados || editarnota) {
             Long id = bundle.getLong("id");
@@ -173,6 +179,9 @@ public class EditorActivity extends AppCompatActivity {
             String data = bundle.getString("data");
             int caminhoImg = bundle.getInt("caminhoImg");
             this.editarNota = editarnota;
+            if(idpasta != null){ /// se for differentte de  null vai salvar o id da pasta
+                nota.setIdPasta(idpasta);
+            }
             nota.setId(id);
             nota.setTitulo(titulo);
             nota.setTexto(texto);

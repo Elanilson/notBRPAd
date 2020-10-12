@@ -2,45 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.NotasFragment">
+    tools:context=".activity.VisualizarPastaActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerviewVisuPasta"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/cinza_escuro"
-        android:layoutAnimation="@anim/layout_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-<!--    <com.melnykov.fab.FloatingActionButton-->
-<!--        android:id="@+id/fabButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|right"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:src="@drawable/ic_message_24"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.94"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        fab:fab_colorNormal="@color/primary"-->
-<!--        fab:fab_colorPressed="@color/primary_pressed"-->
-<!--        fab:fab_colorRipple="@color/ripple" >-->
-<!--    </com.melnykov.fab.FloatingActionButton>-->
-
+        app:layout_constraintTop_toTopOf="parent" />
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fabmenuPasta"
         android:layout_width="wrap_content"
@@ -91,14 +66,14 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabmenu_Pesquisaitem"
+            android:id="@+id/fabmenuPasta_Pesquisaitem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_search_24"
             fab:fab_label="Menu item 1"
             fab:fab_size="mini" />
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabmenu_itemadd"
+            android:id="@+id/fabmenuPasta_itemadd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_message_24"

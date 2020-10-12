@@ -16,9 +16,9 @@
         android:label="Lixeira"
         tools:layout="@layout/fragment_lixeira" />
     <fragment
-        android:id="@+id/menu3"
+        android:id="@+id/pastas"
         android:name="com.elanilsondejesus.com.notpadbr.fragment.PastaFragment"
-        android:label="fragment_terceiro"
+        android:label="PastaFragment"
         tools:layout="@layout/fragment_pasta" />
 
 </navigation>

@@ -59,7 +59,7 @@ public class DaoPasta implements PastaDAO {
     public Boolean deletar(Pasta pasta) {
         try{
             String [] args = {pasta.getId().toString()};
-            escrever.delete(Banco_DB.TABELA_NOTA,"id=?",args);
+            escrever.delete(Banco_DB.TABELA_PASTA,"id=?",args);
             Log.i("INFO", "Dados deletado com sucesso!");
 
         }catch (Exception e){

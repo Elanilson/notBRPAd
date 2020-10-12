@@ -126,29 +126,29 @@ public class AdapterItemLista extends RecyclerView.Adapter<AdapterItemLista.MyVi
             marcado = itemView.findViewById(R.id.checkBoxItem);
             opcoes = itemView.findViewById(R.id.imageButtonOpcoes);
             layout = itemView.findViewById(R.id.layoutItem);
-            opcoes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    menuPopUp(view);
-                  //  Toast.makeText(context, "toctco", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-
-                }
-            });
-            layout.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    Toast.makeText(context, "long", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
+//            opcoes.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    menuPopUp(view);
+//                  //  Toast.makeText(context, "toctco", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+//            layout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//
+//
+//                }
+//            });
+//            layout.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    Toast.makeText(context, "long", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                }
+//            });
 
 
         }

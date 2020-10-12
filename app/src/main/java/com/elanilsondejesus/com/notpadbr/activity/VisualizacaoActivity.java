@@ -139,13 +139,16 @@ public class VisualizacaoActivity extends AppCompatActivity {
     public void recebendoDados(){
         Bundle bundle = getIntent().getExtras();
         Long id = null ;
+        Long idpasta = null ;
 
           id = bundle.getLong("id") ;
+          idpasta = bundle.getLong("idpasta") ;
            String titulo = bundle.getString("titulo");
            String texto = bundle.getString("texto");
            String data = bundle.getString("data");
            int caminhoImg = bundle.getInt("caminhoImg");
            nota.setId(id);
+           nota.setIdPasta(idpasta);
            nota.setTitulo(titulo);
            nota.setTexto(texto);
            nota.setData(data);
@@ -168,6 +171,7 @@ public class VisualizacaoActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(VisualizacaoActivity.this,TemaActivity.class);
                 intent.putExtra("id",nota.getId());
+                intent.putExtra("idpasta",nota.getIdPasta());
                 startActivity(intent);
 //                finish();
                 break;
@@ -179,6 +183,7 @@ public class VisualizacaoActivity extends AppCompatActivity {
         // enviar dados para serem editados/alterados
         Intent intent = new Intent(VisualizacaoActivity.this,EditorActivity.class);
         intent.putExtra("id",nota.getId());
+        intent.putExtra("idPasta",nota.getIdPasta());
         intent.putExtra("titulo",nota.getTitulo());
         intent.putExtra("texto",nota.getTexto());
         intent.putExtra("data",nota.getData());

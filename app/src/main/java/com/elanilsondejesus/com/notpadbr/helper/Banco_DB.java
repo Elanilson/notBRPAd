@@ -21,7 +21,7 @@ public class Banco_DB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String sql = " CREATE TABLE IF NOT EXISTS "+TABELA_NOTA
-                +"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), texto TEXT,cordefundo INT, data varchar(15),caminhoImg INT,status INTEGER DEFAULT 1);";
+                +"(id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR(50), texto TEXT,cordefundo INT, data varchar(15),caminhoImg INT,status INTEGER DEFAULT 1,idpasta int);";
         //pesorestante é o resultado da subtracao do peso autal com a meta
 
 

@@ -32,17 +32,19 @@ public class AdapterTema extends RecyclerView.Adapter<AdapterTema.MyViewHolder> 
    List<Tema> temas;
    Context context;
    Long id;
+   Long idpasta;
     private Dialog dialox;
     private Dialog dialog;
 /*
 Dialog e passando como paramento para que passa funcionar aqui dentro
 e na activity tema o mesmo dialog recebe um contexto
  */
-    public AdapterTema(List<Tema> temas, Context context, Long id, Dialog dialox) {
+    public AdapterTema(List<Tema> temas, Context context, Long id, Dialog dialox ,Long idpasta) {
         this.temas = temas;
         this.context = context;
         this.id = id;
         this.dialox = dialox;
+        this.idpasta = idpasta;
 
     }
 
@@ -76,6 +78,10 @@ e na activity tema o mesmo dialog recebe um contexto
                 DAONota dao = new DAONota(context);
                 int caminho = tema.getImagem();
 
+                /*
+                id vai de amazenado em notecole e por sua vez vai ser atualizado a tabela
+                 */
+
 
                 if(caminho != 0){
                     for(Nota nota: dao.listar()){
@@ -84,6 +90,7 @@ e na activity tema o mesmo dialog recebe um contexto
 
                             Nota  notecolo = new Nota();
                             notecolo.setId(nota.getId());
+                            notecolo.setIdPasta(idpasta);
                             notecolo.setCaminhoImg(caminho);
                             notecolo.setTitulo(nota.getTitulo());
                             notecolo.setTexto(nota.getTexto());
