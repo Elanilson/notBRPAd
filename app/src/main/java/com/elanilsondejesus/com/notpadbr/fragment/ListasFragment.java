@@ -165,6 +165,8 @@ public class ListasFragment extends Fragment {
 
     }
     public void salvar(String nome){
+        int contador =0;
+
         DAOLista dao = new DAOLista(getActivity());
         Lista lista = new Lista();
        if(nome != null || !nome.isEmpty()){
@@ -173,6 +175,22 @@ public class ListasFragment extends Fragment {
         listas.clear(); /// limpar lista
        lista.setData(DataUtils.getDataAtual());
         if(dao.salvar(lista)){
+            for(Lista list: dao.listar()){
+                contador++;
+                /*
+                o contador vai sendo incrementado ate que seja listado dos os itens
+                nesse caso vamos ter o numero total di itens na lista , com esse valor
+                pode pegar a ultima lista criada
+                 */
+                if(contador == dao.listar().size()){
+                    Toast.makeText(getActivity(), "id: "+list.getId(), Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getActivity(), VisualizarListaActivity.class);
+                    intent.putExtra("idlista",list.getId());
+                    startActivity(intent);
+
+                }
+            }
 
             Toast.makeText(getActivity(), "Sucesso ao salvar", Toast.LENGTH_SHORT).show();
         }else{
@@ -289,7 +307,7 @@ public class ListasFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 deletar(lista);
-                deletarItensDeLista(lista);
+//                deletarItensDeLista(lista);
                 dialox.dismiss();
             }
         });
@@ -373,6 +391,7 @@ public class ListasFragment extends Fragment {
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                deletarItensDeLista(lista);
                 if(dao.deletar(lista)){
                     recerrgarLista();
 

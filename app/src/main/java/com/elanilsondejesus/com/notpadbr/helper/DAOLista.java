@@ -29,6 +29,7 @@ public class DAOLista implements ListaDAO {
         cv.put("texto",lista.getTexto());
         cv.put("cordefundo",lista.getCordeFundo());
         cv.put("data",lista.getData());
+        cv.put("caminhoImg",lista.getCaminhoImg());
 
         try {
             escrever.insert(Banco_DB.TABELA_LISTA,null,cv);
@@ -48,6 +49,8 @@ public class DAOLista implements ListaDAO {
         cv.put("texto",lista.getTexto());
         cv.put("cordefundo",lista.getCordeFundo());
         cv.put("data",lista.getData());
+        cv.put("caminhoImg",lista.getCaminhoImg());
+
         try {
             String [] args ={lista.getId().toString()};
             escrever.update(Banco_DB.TABELA_LISTA,cv,"id=?",args);
@@ -90,6 +93,7 @@ public class DAOLista implements ListaDAO {
             String texto = c.getString(c.getColumnIndex("texto"));
             int cordefundo = c.getInt(c.getColumnIndex("cordefundo"));
             String data = c.getString(c.getColumnIndex("data"));
+            int caminhoImg = c.getInt(c.getColumnIndex("caminhoImg"));
 
 
             lista.setId(id);
@@ -97,6 +101,7 @@ public class DAOLista implements ListaDAO {
             lista.setTexto(texto);
             lista.setCordeFundo(cordefundo);
             lista.setData(data);
+            lista.setCaminhoImg(caminhoImg);
 
             listas.add(lista);
             Log.i("Lista:", "AS notas estão sendo listadas" );

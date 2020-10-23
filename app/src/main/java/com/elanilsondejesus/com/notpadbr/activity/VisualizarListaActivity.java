@@ -1,5 +1,6 @@
 package com.elanilsondejesus.com.notpadbr.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -52,6 +57,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
     private  Long idLista=null;
     Boolean ativo = false;
     private  Lista lista = new Lista();
+    private ImageView imagemTema ;
 
 
     @Override
@@ -60,6 +66,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_lista);
         recebendoDados();
         carregarItens();
+        inicializarComponentes();
         iniciarRecycleviewEdefinirLayout(itens);
        // configurandoClickRecycleview();
             carregarLista();
@@ -69,8 +76,6 @@ public class VisualizarListaActivity extends AppCompatActivity {
         toolbar.setTitle(lista.getTitulo());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         //configulando CollapsingToolbarLayout
 
@@ -95,6 +100,15 @@ public class VisualizarListaActivity extends AppCompatActivity {
 
             }
         });
+        // inicia com a imagegm padrao fornecida abaixo
+        carregarFotoTema();
+
+    }
+    public void inicializarComponentes(){
+//        campoTitulo = findViewById(R.id.editTitulo);
+      //  campoTexto = findViewById(R.id.visuTexto);
+        imagemTema = findViewById(R.id.imagemTemaLista);
+
     }
     public void iniciarRecycleviewEdefinirLayout(List<ItemLista> itens){
 
@@ -271,9 +285,47 @@ public class VisualizarListaActivity extends AppCompatActivity {
 
         }
     }
+    public void carregarFotoTema(){
+        if(lista.getCaminhoImg() != 0){
+            /*
+            se o caminho da imagem existir no banco de dados ele sera exibida
+             */
+            imagemTema.setImageResource(lista.getCaminhoImg());
+        }else{
+            imagemTema.setImageResource(R.drawable.imagem4);
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_visualizacao,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.tema:
 
+                Intent intent = new Intent(VisualizarListaActivity.this,TemaActivity.class);
+                intent.putExtra("id",idLista);
+                intent.putExtra("lista","lista");
+                startActivity(intent);
+//                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    public void recarregarTema(){
+        DAOLista dao = new DAOLista(getApplicationContext());
+        for(Nota n: dao.listar()){
+            if(n.getId() == idLista){
+                imagemTema.setImageResource(n.getCaminhoImg());
+            }
+
+        }
+    }
     public void recarregar(){
        // carregarItens();
         List<ItemLista> item = new ArrayList<>();
@@ -295,8 +347,10 @@ public class VisualizarListaActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onStart() {
+        super.onStart();
+
+        recarregarTema();
 
     }
 }

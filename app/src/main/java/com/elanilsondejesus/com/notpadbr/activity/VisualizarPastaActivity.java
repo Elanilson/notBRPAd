@@ -48,6 +48,7 @@ public class VisualizarPastaActivity extends AppCompatActivity {
 
 
         recebendoDados();
+        Toast.makeText(this, "id:"+idPasta, Toast.LENGTH_SHORT).show();
         carregarItens();
         iniciarRecycleviewEdefinirLayout(notas);
         configurandoClickRecycleview();
@@ -83,6 +84,7 @@ public class VisualizarPastaActivity extends AppCompatActivity {
             public void onLongItemClick(View view, int position) {
                 //Recuperar tarefa para edicao
                 notaSelecionada = notas.get(position);
+                Toast.makeText(getApplicationContext(), "id:"+notaSelecionada.getIdPasta(), Toast.LENGTH_SHORT).show();
 
                 opcoes(notaSelecionada);
             }
@@ -279,7 +281,7 @@ public class VisualizarPastaActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Long id = bundle.getLong("idpasta");
 
-        nota.setId(id);
+        nota.setIdPasta(id);
         idPasta=id;
         pasta.setId(id);
 

@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.VisualizarPastaActivity"></activity>
+        <activity android:name=".activity.LixeiraActivity"></activity>
+        <activity android:name=".activity.VisualizarPastaActivity" />
         <activity android:name=".activity.VisualizarTemaMainActivity" />
         <activity android:name=".activity.PesquisaActivity" />
         <activity android:name=".activity.TemaActivity" />
         <activity android:name=".activity.VisualizarListaActivity" />
+
         <activity
             android:name=".activity.EditorActivity"
             android:parentActivityName=".activity.VisualizacaoActivity" />

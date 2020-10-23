@@ -20,7 +20,9 @@ import com.elanilsondejesus.com.notpadbr.R;
 import com.elanilsondejesus.com.notpadbr.activity.TemaActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizarTemaMainActivity;
+import com.elanilsondejesus.com.notpadbr.helper.DAOLista;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
+import com.elanilsondejesus.com.notpadbr.model.Lista;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
 import com.elanilsondejesus.com.notpadbr.model.Tema;
 
@@ -33,18 +35,20 @@ public class AdapterTema extends RecyclerView.Adapter<AdapterTema.MyViewHolder> 
    Context context;
    Long id;
    Long idpasta;
+   String listaa;
     private Dialog dialox;
     private Dialog dialog;
 /*
 Dialog e passando como paramento para que passa funcionar aqui dentro
 e na activity tema o mesmo dialog recebe um contexto
  */
-    public AdapterTema(List<Tema> temas, Context context, Long id, Dialog dialox ,Long idpasta) {
+    public AdapterTema(List<Tema> temas, Context context, Long id, Dialog dialox ,Long idpasta, String listaa) {
         this.temas = temas;
         this.context = context;
         this.id = id;
         this.dialox = dialox;
         this.idpasta = idpasta;
+        this.listaa = listaa;
 
     }
 
@@ -76,6 +80,7 @@ e na activity tema o mesmo dialog recebe um contexto
             public void onClick(View view) {
                 //  caminho da imagem salva no bd
                 DAONota dao = new DAONota(context);
+                DAOLista daoLista = new DAOLista(context);
                 int caminho = tema.getImagem();
 
                 /*
@@ -83,7 +88,7 @@ e na activity tema o mesmo dialog recebe um contexto
                  */
 
 
-                if(caminho != 0){
+                if(caminho != 0 && listaa==null){
                     for(Nota nota: dao.listar()){
                         if(nota.getId() == id){
                             Toast.makeText(context, "ID:"+nota.getId(), Toast.LENGTH_SHORT).show();
@@ -114,8 +119,39 @@ e na activity tema o mesmo dialog recebe um contexto
                     }
 
 
-                }
+                } // se não contem lista é uma nota e vai enterar
+                if(caminho != 0 && listaa!= null){ // se conter lista vai entra pq e lista
+                    for(Lista lista: daoLista.listar()){
+                        if(lista.getId() == id){
+                            Toast.makeText(context, "ID:"+lista.getId(), Toast.LENGTH_SHORT).show();
 
+                            Lista list = new Lista();
+                            list.setId(lista.getId());
+//                            notecolo.setIdPasta(idpasta);
+                            list.setCaminhoImg(caminho);
+                            list.setTitulo(lista.getTitulo());
+//                            notecolo.setTexto(lista.getTexto());
+                            list.setData(lista.getData());
+//                            notecolo.setCordeFundo(lista.getCordeFundo());
+//                            notecolo.setStatus(lista.getStatus());
+                            if(daoLista.atualizar(list)){
+                                // Toast.makeText(context, "Atualizado", Toast.LENGTH_SHORT).show();
+                                carregar();
+
+
+
+
+
+                            }else{
+                                Toast.makeText(context, "Erro ao Atualizar", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                    }
+
+
+                }
 
             }
         });

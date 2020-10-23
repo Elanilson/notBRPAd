@@ -23,14 +23,16 @@
                 app:expandedTitleMarginStart="15dp"
                 app:expandedTitleMarginBottom="20dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
                 <ImageView
+                    android:id="@+id/imagemTemaLista"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
+                    android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/testefoto"
-                    android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax"/>
+                    app:layout_collapseMode="parallax" />
 
                 <View
                     android:id="@+id/view"

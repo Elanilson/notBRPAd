@@ -283,8 +283,9 @@ public class PastaFragment extends Fragment {
         dialox.setContentView(R.layout.dialogaddpasta);
         dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
         final EditText campoTitulo = dialox.findViewById(R.id.editTextaddPasta);
+        final TextView campoTitu = dialox.findViewById(R.id.textViewAlteraTitulo);
         Button salvarPasta = dialox.findViewById(R.id.buttonsalvarPasta);
-
+        campoTitu.setText("New folder");
         salvarPasta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

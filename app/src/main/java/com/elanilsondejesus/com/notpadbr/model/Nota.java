@@ -12,12 +12,29 @@ public class Nota implements Serializable {
     private String data;
     private int caminhoImg;
     private int status;
+    private  boolean adicionar;
 
     public Nota() {
     }
 
+    public Nota(String titulo, String texto, boolean adicionar) {
+        this.titulo = titulo;
+        this.texto = texto;
+        this.adicionar = adicionar;
+    }
 
+    public Nota(String titulo, String texto) {
+        this.titulo = titulo;
+        this.texto = texto;
+    }
 
+    public boolean isAdicionar() {
+        return adicionar;
+    }
+
+    public void setAdicionar(boolean adicionar) {
+        this.adicionar = adicionar;
+    }
 
     public Long getIdPasta() {
         return idPasta;

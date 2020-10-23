@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#242043</color>
-    <color name="colorPrimaryDark">#242043</color>
+    <color name="colorPrimary">#005f63</color>
+    <color name="colorPrimaryDark">#005f63</color>
     <color name="colorAccent">#d9823b</color>
     <color name="divisor">#9F9F9E</color>
     <color name="black">#171717</color>
     <color name="cinza_escuro">#D6D3D3</color>
     <color name="azul">#4b4676</color>
     <color name="fundoIMG">#9A0A0917</color>
+    <color name="escurecendo">#750A0917</color>
+    <color name="walpaper">#E2E4E4</color>
+    <color name="texto">#770C0C0C</color>
 </resources>

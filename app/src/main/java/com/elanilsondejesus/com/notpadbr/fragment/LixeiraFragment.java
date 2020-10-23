@@ -1,5 +1,6 @@
 package com.elanilsondejesus.com.notpadbr.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
+import com.elanilsondejesus.com.notpadbr.activity.LixeiraActivity;
+import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.RecyclerItemClickListener;
@@ -110,6 +113,22 @@ public class LixeiraFragment extends Fragment {
                 //Recuperar tarefa para edicao
                 notaSelecionada = notas.get(position);
               //  enviarDadosSelecionado(notaSelecionada);
+                Intent intent = new Intent(getActivity(), LixeiraActivity.class);
+                intent.putExtra("id", notaSelecionada.getId());
+                intent.putExtra("idpasta", notaSelecionada.getIdPasta());
+                intent.putExtra("titulo", notaSelecionada.getTitulo());
+                intent.putExtra("texto", notaSelecionada.getTexto());
+                intent.putExtra("data", notaSelecionada.getData());
+                intent.putExtra("caminhoImg", notaSelecionada.getCaminhoImg());
+                intent.putExtra("status", notaSelecionada.getStatus());
+                //Toast.makeText(getActivity(), "cami: "+nota.getCaminhoImg(), Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
+                try {
+                    finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
 //
 
             }
@@ -121,7 +140,7 @@ public class LixeiraFragment extends Fragment {
 //                        dialogCustom(notaSelecionada);
                 //teste(notaSelecionada);
                 //opcoes(notaSelecionada);
-                Toast.makeText(getActivity(), "Status: "+notaSelecionada.getStatus(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Status: "+notaSelecionada.getIdPasta(), Toast.LENGTH_SHORT).show();
 
             }
 
@@ -139,6 +158,29 @@ public class LixeiraFragment extends Fragment {
             nota.setCaminhoImg(not.getCaminhoImg());
 
         }
+
+    }
+    public void recarregar() {
+        carregarNotas();
+        List<Nota> notas = new ArrayList<>();
+        DAONota dao = new DAONota(getActivity());
+        for (Nota nota : dao.listarInativo()) {
+            notas.add(nota);
+        }
+        iniciarRecycleviewEdefinirLayout(notas);
+        adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        notas.clear();
+
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        recarregar();
 
     }
 

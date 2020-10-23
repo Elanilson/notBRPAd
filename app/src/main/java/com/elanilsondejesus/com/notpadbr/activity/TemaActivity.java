@@ -33,6 +33,7 @@ public class TemaActivity extends AppCompatActivity {
     private List<Tema> temas = new ArrayList<>();
     private Long id;
     private Long idpasta;
+    private String lista ="";
     private Dialog dialox;
     private Boolean temaselecionado =false;
     Context context;
@@ -85,7 +86,7 @@ public class TemaActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerviewTema);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdapterTema(temas,TemaActivity.this,id,dialox,idpasta);
+        adapter = new AdapterTema(temas,TemaActivity.this,id,dialox,idpasta,lista);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
@@ -94,6 +95,7 @@ public class TemaActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         id = bundle.getLong("id");
         idpasta = bundle.getLong("idpasta");
+        lista = bundle.getString("lista");
     }
     public void carregarTemas(){
         Tema tema = new Tema(R.drawable.imagem1);

@@ -11,6 +11,16 @@
         android:label="fragment_primeiro"
         tools:layout="@layout/fragment_principal" />
     <fragment
+        android:id="@+id/notas"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.NotasFragment"
+        android:label="Notas"
+        tools:layout="@layout/fragment_notas" />
+    <fragment
+        android:id="@+id/listas"
+        android:name="com.elanilsondejesus.com.notpadbr.fragment.ListasFragment"
+        android:label="Listas"
+        tools:layout="@layout/fragment_listas" />
+    <fragment
         android:id="@+id/lixeira"
         android:name="com.elanilsondejesus.com.notpadbr.fragment.LixeiraFragment"
         android:label="Lixeira"
