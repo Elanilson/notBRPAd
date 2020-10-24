@@ -5,5 +5,11 @@
     <item
         android:id="@+id/salvarNota"
         android:icon="@drawable/ic_salvar_24"
-        android:title="Salvar" />
+        android:title="Salvar"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/coresEditar"
+        android:icon="@drawable/ic_aplicar_24"
+        android:title="@string/cores"
+        app:showAsAction="collapseActionView" />
 </menu>

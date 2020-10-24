@@ -65,12 +65,13 @@ public class VisualizacaoActivity extends AppCompatActivity {
 
         // atribuindo valor aos campos
         campoTexto.setText(nota.getTexto());
+        campoTexto.setBackgroundColor(nota.getCordeFundo());
 
 
 
         //configurando toolbar
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         toolbar.setTitle(nota.getTitulo());
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -147,11 +148,13 @@ public class VisualizacaoActivity extends AppCompatActivity {
            String texto = bundle.getString("texto");
            String data = bundle.getString("data");
            int caminhoImg = bundle.getInt("caminhoImg");
+           int cor = bundle.getInt("cor");
            nota.setId(id);
            nota.setIdPasta(idpasta);
            nota.setTitulo(titulo);
            nota.setTexto(texto);
            nota.setData(data);
+           nota.setCordeFundo(cor);
            nota.setCaminhoImg(caminhoImg);
 
 //        Toast.makeText(this, "id: "+nota.getId()+" titulo: "+nota.getTitulo()+" texto: "+nota.getTexto(), Toast.LENGTH_SHORT).show();
@@ -188,6 +191,7 @@ public class VisualizacaoActivity extends AppCompatActivity {
         intent.putExtra("texto",nota.getTexto());
         intent.putExtra("data",nota.getData());
         intent.putExtra("caminhoImg",nota.getCaminhoImg());
+        intent.putExtra("cor",nota.getCordeFundo());
         intent.putExtra("editar",true);
         startActivity(intent);
         finish();

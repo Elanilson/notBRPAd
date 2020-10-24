@@ -17,7 +17,8 @@ public class Nota implements Serializable {
     public Nota() {
     }
 
-    public Nota(String titulo, String texto, boolean adicionar) {
+    public Nota(Long id, String titulo, String texto, boolean adicionar) {
+        this.id = id;
         this.titulo = titulo;
         this.texto = texto;
         this.adicionar = adicionar;

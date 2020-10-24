@@ -88,6 +88,10 @@ public class DAONota implements NotaDAO {
 
     @Override
     public List<Nota> listar() {
+        /*
+        1 = ativo
+        0 = inativo
+         */
         List<Nota> notas =new ArrayList<>();
         String sql ="SELECT * FROM "+Banco_DB.TABELA_NOTA +" WHERE status=1 AND idpasta=0;";
         Cursor c = ler.rawQuery(sql,null);

@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
+import com.elanilsondejesus.com.notpadbr.activity.EditorActivity;
+import com.elanilsondejesus.com.notpadbr.activity.VisualizacaoActivity;
 import com.elanilsondejesus.com.notpadbr.activity.VisualizarListaActivity;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterListHome;
 import com.elanilsondejesus.com.notpadbr.adapter.AdapterNotaFavoritas;
@@ -46,7 +48,7 @@ public class PrincipalFragment extends Fragment {
    private AdapterNotaFavoritas adapterNotaFavoritas;
    private AdapterNotaHoje adapterNotaHoje;
    private AdapterListHome adapterListHome;
-   private RecyclerView recyclerView;
+   private RecyclerView recyclerView,recyclerViewFavorito,recyclerViewHoje;
    private List<Nota> listaFavoritos = new ArrayList<>();
    private List<Nota> listHoje = new ArrayList<>();
    private List<Lista> listHomes = new ArrayList<>();
@@ -114,6 +116,8 @@ public class PrincipalFragment extends Fragment {
         iniciarRecycleviewEdefinirLayoutFavoritos(listaFavoritos);
         iniciarRecycleviewEdefinirLayoutList(listHomes);
         configurandoClickRecycleview();
+        configurandoClickRecycleviewFavorito();
+        configurandoClickRecycleviewHoje();
         dialox = new Dialog(getActivity());
 
 
@@ -122,14 +126,14 @@ public class PrincipalFragment extends Fragment {
     }
     public void iniciarRecycleviewEdefinirLayoutFavoritos(List<Nota>favorito) {
 
-        recyclerView = view.findViewById(R.id.recyclerviewFavoritos);
+        recyclerViewFavorito = view.findViewById(R.id.recyclerviewFavoritos);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         layout.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerView.setLayoutManager(layout);
+        recyclerViewFavorito.setLayoutManager(layout);
 
         adapterNotaFavoritas = new AdapterNotaFavoritas(favorito);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapterNotaFavoritas);
+        recyclerViewFavorito.setHasFixedSize(true);
+        recyclerViewFavorito.setAdapter(adapterNotaFavoritas);
 
     }
 
@@ -178,6 +182,117 @@ public class PrincipalFragment extends Fragment {
             }
         }
         ));
+    }
+    public void configurandoClickRecycleviewFavorito(){
+        //Adicionar evento de clique
+        recyclerViewFavorito.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(), recyclerViewFavorito, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //Recuperar tarefa para edicao
+                notaSelecionada = listaFavoritos.get(position);
+
+
+                if(position == 0L){
+                    Intent intent = new Intent(getActivity(), EditorActivity.class);
+                    intent.putExtra("enviarDados", false);
+                    startActivity(intent);
+                }else{
+//                    //Recuperar tarefa para edicao
+                    enviarDadosSelecionado(notaSelecionada);
+
+                    Toast.makeText(getActivity(), "else:", Toast.LENGTH_SHORT).show();
+
+//
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                //Recuperar tarefa para edicao
+//                listaSelecionada = listas.get(position);
+//                opcoes(listaSelecionada);
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+            }
+        }
+        ));
+    }
+    public void configurandoClickRecycleviewHoje(){
+        //Adicionar evento de clique
+        recyclerViewHoje.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(), recyclerViewHoje, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //Recuperar tarefa para edicao
+                notaSelecionada = listHoje.get(position);
+
+                Toast.makeText(getActivity(), "else:"+position, Toast.LENGTH_SHORT).show();
+
+                if(notaSelecionada != null && notaSelecionada.getId() != null ){
+//                    //Recuperar tarefa para edicao
+                    enviarDadosSelecionado(notaSelecionada);
+
+                    Toast.makeText(getActivity(), "else:", Toast.LENGTH_SHORT).show();
+
+//
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                //Recuperar tarefa para edicao
+//                listaSelecionada = listas.get(position);
+//                opcoes(listaSelecionada);
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+            }
+        }
+        ));
+    }
+    public void enviarDadosSelecionado(Nota nota) {
+        Toast.makeText(getActivity(), "visualizarrr", Toast.LENGTH_SHORT).show();
+
+        /*
+        quando o usuario clicar na nota essa nota selecionada vai enviar os seus dados para outra tela
+        para que seja apresentada ao usuario
+         */
+        /*
+        o conteudo é enviado como parametro pelo contrutor e esse memtodi aqui
+        ele recebe o contexto enviado e é utilizado para iniciar a intent
+         */
+        Intent intent = new Intent(getActivity(), VisualizacaoActivity.class);
+        intent.putExtra("id", nota.getId());
+        intent.putExtra("titulo", nota.getTitulo());
+        intent.putExtra("texto", nota.getTexto());
+        intent.putExtra("data", nota.getData());
+        intent.putExtra("caminhoImg", nota.getCaminhoImg());
+        intent.putExtra("status", nota.getStatus());
+        //Toast.makeText(getActivity(), "cami: "+nota.getCaminhoImg(), Toast.LENGTH_SHORT).show();
+
+        startActivity(intent);
     }
     public void adicionarLista(){
         dialox.setContentView(R.layout.dialogadiconarlista);
@@ -245,14 +360,14 @@ para que passa pega a ultima lista criada que possa ser saberta/inflada
     }
     public void iniciarRecycleviewEdefinirLayoutHoje(List<Nota> hojeNotas) {
 
-        recyclerView = view.findViewById(R.id.recyclerviewHoje);
+        recyclerViewHoje = view.findViewById(R.id.recyclerviewHoje);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         layout.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerView.setLayoutManager(layout);
+        recyclerViewHoje.setLayoutManager(layout);
 
         adapterNotaHoje = new AdapterNotaHoje(hojeNotas);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapterNotaHoje);
+        recyclerViewHoje.setHasFixedSize(true);
+        recyclerViewHoje.setAdapter(adapterNotaHoje);
 
     }
     public void iniciarRecycleviewEdefinirLayoutList(List<Lista> listHome) {
@@ -274,7 +389,7 @@ para que passa pega a ultima lista criada que possa ser saberta/inflada
 
     public void criarNotasTeste() {
         listaFavoritos.clear();
-        Nota fatorito = new Nota("Adicione aos favoritos","acesse de maneira rápidas suas notas!",true);
+        Nota fatorito = new Nota(0L,"Adicione aos favoritos","acesse de maneira rápidas suas notas!",true);
         listaFavoritos.add(fatorito);
         DAONota dao = new DAONota(getActivity());
         for(Nota not: dao.listar()){

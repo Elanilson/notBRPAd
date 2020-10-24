@@ -3,30 +3,22 @@ package com.elanilsondejesus.com.notpadbr.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.elanilsondejesus.com.notpadbr.R;
-import com.elanilsondejesus.com.notpadbr.adapter.AdapterNota;
 import com.elanilsondejesus.com.notpadbr.fragment.NotasFragment;
 import com.elanilsondejesus.com.notpadbr.helper.DAONota;
 import com.elanilsondejesus.com.notpadbr.helper.DataUtils;
 import com.elanilsondejesus.com.notpadbr.model.Nota;
-import com.scrat.app.richtext.RichEditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditorActivity extends AppCompatActivity {
     private EditText campoTitulo , campoTexto ;
@@ -36,6 +28,9 @@ public class EditorActivity extends AppCompatActivity {
     private Boolean editarNota = false;
     private boolean dadosenviados = false;
     private Long idpasta =null;
+    private  List<Integer> cor = new ArrayList<>();
+
+
 
 
     @Override
@@ -49,7 +44,7 @@ public class EditorActivity extends AppCompatActivity {
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbarEditor);
         toolbar.setTitle("");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.azul));
+       // toolbar.setBackgroundColor(getResources().getColor(R.color.azul));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Toast.makeText(this, "id: "+idpasta, Toast.LENGTH_SHORT).show();
@@ -57,6 +52,7 @@ public class EditorActivity extends AppCompatActivity {
         /*
         verificar se tem dados antes de sair da tela implmentar isso
          */
+
 
 
 
@@ -78,6 +74,16 @@ public class EditorActivity extends AppCompatActivity {
                 // primeiro ele verefica e depois salva
                 verificarOsCampos();
 
+                break;
+            case R.id.coresEditar:
+              //  startActivity(new Intent(EditorActivity.this,CoresActivity.class));
+                Intent intent = new Intent(EditorActivity.this,CoresActivity.class);
+                String etitulo =campoTitulo.getText().toString();
+                String etexto =campoTexto.getText().toString();
+                intent.putExtra("titulo",etitulo);
+                intent.putExtra("texto",etexto);
+                startActivity(intent);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -103,6 +109,9 @@ public class EditorActivity extends AppCompatActivity {
     public void atribuicao(){
         titulo = campoTitulo.getText().toString();
         texto = campoTexto.getText().toString();
+        campoTexto.setBackgroundColor(nota.getCordeFundo());
+        Toast.makeText(this, "corE"+nota.getCordeFundo(), Toast.LENGTH_SHORT).show();
+
 
         if(nota.getTitulo() != null){
             if(nota.getTexto()!= null){
@@ -122,16 +131,10 @@ public class EditorActivity extends AppCompatActivity {
 
         DAONota dao = new DAONota(getApplicationContext());
         Nota nota = new Nota();
-//        if(titulo == null){
-//            titulo ="rascunho";
-//
-//        }
-//        if(texto == null){
-//            texto ="rascunho";
-//        }
         nota.setTitulo(titulo);
         nota.setTexto(texto);
         nota.setIdPasta(idpasta);
+      //  nota.setCordeFundo(R.color.black);
         nota.setStatus(1);
         nota.setData(DataUtils.getDataAtual());
         if(editarNota){
@@ -139,10 +142,11 @@ public class EditorActivity extends AppCompatActivity {
             this.nota.setTexto(texto);
             this.nota.setIdPasta(idpasta);
             this.nota.setStatus(1);
+           // this.nota.setCordeFundo(nota.getCordeFundo());
             campoTitulo.setText(titulo);
             campoTexto.setText(texto);
             if(dao.atualizar(this.nota)){// atualizar com os dados do escopo global
-                Toast.makeText(this, "Atualizado"+idpasta, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Atualizado cord"+nota.getCordeFundo(), Toast.LENGTH_SHORT).show();
 
                 finish();
 
@@ -155,7 +159,7 @@ public class EditorActivity extends AppCompatActivity {
 
 
             if(dao.salvar(nota)){
-                Toast.makeText(this, "Salvo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Salvo cod"+nota.getCordeFundo(), Toast.LENGTH_SHORT).show();
 
                 finish();
             }else{
@@ -172,17 +176,18 @@ public class EditorActivity extends AppCompatActivity {
         dadosenviados = bundle.getBoolean("enviarDados");
         idpasta = bundle.getLong("idPasta");
         boolean editarnota = bundle.getBoolean("editar");
+            int cor = bundle.getInt("cor");
         if(dadosenviados || editarnota) {
             Long id = bundle.getLong("id");
             String titulo = bundle.getString("titulo");
             String texto = bundle.getString("texto");
             String data = bundle.getString("data");
             int caminhoImg = bundle.getInt("caminhoImg");
-            this.editarNota = editarnota;
             if(idpasta != null){ /// se for differentte de  null vai salvar o id da pasta
                 nota.setIdPasta(idpasta);
             }
             nota.setId(id);
+            nota.setCordeFundo(cor);
             nota.setTitulo(titulo);
             nota.setTexto(texto);
             nota.setData(data);
@@ -197,6 +202,7 @@ public class EditorActivity extends AppCompatActivity {
         intent.putExtra("id",nota.getId());
         intent.putExtra("titulo",nota.getTitulo());
         intent.putExtra("texto",nota.getTexto());
+        intent.putExtra("cor",nota.getCordeFundo());
         startActivity(intent);
     }
 

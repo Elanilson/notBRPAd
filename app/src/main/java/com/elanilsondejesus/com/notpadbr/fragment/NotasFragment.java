@@ -259,6 +259,7 @@ public class NotasFragment extends Fragment {
          intent.putExtra("titulo",notaSelecionada.getTitulo());
          intent.putExtra("texto",notaSelecionada.getTexto());
          intent.putExtra("data",notaSelecionada.getData());
+         intent.putExtra("cor",notaSelecionada.getCordeFundo());
          intent.putExtra("caminhoImg",notaSelecionada.getCaminhoImg());
          intent.putExtra("editar",true);
          startActivity(intent);
@@ -270,50 +271,7 @@ public class NotasFragment extends Fragment {
      }
     }
 
-    //    public void dialogCustom (final Nota nota){
-//        final BottomSheetDialog sheetDialog = new BottomSheetDialog( getActivity(),
-//                R.style.Theme_Design_BottomSheetDialog);
-//
-//        View sheetView = LayoutInflater.from(getActivity())
-//                .inflate(R.layout.dialogopcoes,(LinearLayout)view.findViewById(R.id.layoutSheet));
-//
-//        TextView titulo = sheetView.findViewById(R.id.textViewOpcoesNome);
-//            titulo.setText(nota.getTitulo());
-//
-//        sheetView.findViewById(R.id.textViewDeletarNota).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//            deletar(nota);
-//            configurandoClickRecycleview();
-//
-//                sheetDialog.dismiss();
-//            }
-//        });
-//
-//        sheetView.findViewById(R.id.textViewCompartilhar).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "Compartilhando.....", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        sheetView.findViewById(R.id.textViewFavorites).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "Favoritando....", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        sheetView.findViewById(R.id.buttonclose).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                sheetDialog.dismiss();
-//            }
-//        });
-//
-//        sheetDialog.setContentView(sheetView);
-//        sheetDialog.show();
-//    }
+
     public void floatingActionButtonADD() {
         //recyclerView = view.findViewById(R.id.recyclerView);
         FloatingActionButton fab = view.findViewById(R.id.fabmenu_itemadd);
@@ -357,6 +315,7 @@ public class NotasFragment extends Fragment {
         intent.putExtra("titulo", nota.getTitulo());
         intent.putExtra("texto", nota.getTexto());
         intent.putExtra("data", nota.getData());
+        intent.putExtra("cor", nota.getCordeFundo());
         intent.putExtra("caminhoImg", nota.getCaminhoImg());
         intent.putExtra("status", nota.getStatus());
         //Toast.makeText(getActivity(), "cami: "+nota.getCaminhoImg(), Toast.LENGTH_SHORT).show();
