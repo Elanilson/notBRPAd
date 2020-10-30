@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "662991882130",
+    "firebase_url": "https://bloco-de-notas-90838.firebaseio.com",
+    "project_id": "bloco-de-notas-90838",
+    "storage_bucket": "bloco-de-notas-90838.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662991882130:android:04219599ded50c307a234b",
+        "android_client_info": {
+          "package_name": "com.elanilsondejesus.com.notpadbr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662991882130-up49m9pfmp3490dene4q2fouuo1k8rr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elanilsondejesus.com.notpadbr",
+            "certificate_hash": "74167b096d1926cf837ed665758e5b577a8f485a"
+          }
+        },
+        {
+          "client_id": "662991882130-kvtdit6lbtrikh2esvikif8urrlf20f7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmtCBl5_9g_5MuLCEb-J3ywBCSS65kXu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662991882130-kvtdit6lbtrikh2esvikif8urrlf20f7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
